@@ -75,4 +75,12 @@ public class InterestCalculator {
     public long calculateComplexInterest() {
         return -1;
     }
+
+    protected boolean isUnderRMB(){
+        return (account.getBalance() <= account.getRequiredMinimumBalance());
+    }
+
+    protected double setRMBinterest() {
+        return (isUnderRMB()) ? 0.00 : account.getInterestRate();
+    }
 }
