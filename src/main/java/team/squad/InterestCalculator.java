@@ -4,6 +4,8 @@ package team.squad;
  * @author John A. Squier
  * add your name when you work on this file.
  *
+ * TODO remove getters except interestAmount, others are for test purposes
+ *
  * FROM THE FUNCTIONAL REQUIREMENTS PDF
  * "InterestCalculator class should have a calculateSimpleInterest method that computes SIMPLE interest over
  *      a given interval ?? from the objects state ?? (how long is the interval? what object's state? the account?)"

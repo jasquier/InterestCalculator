@@ -3,6 +3,8 @@ package team.squad;
 /**
  * @author John A. Squier
  * add your name when you work on this
+ *
+ * TODO figure out if getters are needed or not
  */
 public class RecurringTransaction {
 
