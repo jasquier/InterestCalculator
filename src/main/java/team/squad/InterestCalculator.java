@@ -95,4 +95,13 @@ public class InterestCalculator {
     public boolean calculateBalancesInOrder(){
         return isThereAccountHistory() || isThereRecurringTransactions();
     }
+
+    protected boolean isOverDrawn(){
+        return account.getBalance() < 0;
+    }
+
+    protected long setOverDraftPenalty(){
+        return (isOverDrawn()) ? account.getOverDraftPenalty() : 0;
+    }
+
 }
