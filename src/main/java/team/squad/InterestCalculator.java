@@ -76,6 +76,14 @@ public class InterestCalculator {
         return -1;
     }
 
+    protected boolean isUnderRMB(){
+        return (account.getBalance() <= account.getRequiredMinimumBalance());
+    }
+
+    protected double setRMBinterest() {
+        return (isUnderRMB()) ? 0.00 : account.getInterestRate();
+    }
+
     public boolean isThereAccountHistory(){
         return this.account.getAccountHistory() != null;
     }
@@ -87,6 +95,4 @@ public class InterestCalculator {
     public boolean calculateBalancesInOrder(){
         return isThereAccountHistory() || isThereRecurringTransactions();
     }
-
-
 }
