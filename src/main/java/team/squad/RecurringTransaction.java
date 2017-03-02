@@ -9,11 +9,19 @@ public class RecurringTransaction {
     private Long amount;
     private Integer frequency;
 
-    public void setFrequency(Integer frequency) {
-        this.frequency = frequency;
+    public Long getAmount() {
+        return amount;
+    }
+
+    public Integer getFrequency() {
+        return frequency;
     }
 
     public void setAmount(Long amount) {
         this.amount = amount;
+    }
+
+    public void setFrequency(Integer frequency) {
+        this.frequency = frequency;
     }
 }
