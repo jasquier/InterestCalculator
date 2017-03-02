@@ -8,13 +8,13 @@ import org.junit.Before;
  */
 public class IntervalTest {
 
-    private Interval hourly, daily, monthly, yearly;
+    private Interval hourly, daily, monthly, annually;
 
     @Before
     public void setup() {
         hourly = Interval.HOURLY;
         daily = Interval.DAILY;
         monthly = Interval.MONTHLY;
-        yearly = Interval.YEARLY;
+        annually = Interval.ANNUALLY;
     }
 }
