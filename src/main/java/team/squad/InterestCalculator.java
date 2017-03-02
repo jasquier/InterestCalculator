@@ -83,4 +83,16 @@ public class InterestCalculator {
     protected double setRMBinterest() {
         return (isUnderRMB()) ? 0.00 : account.getInterestRate();
     }
+
+    public boolean isThereAccountHistory(){
+        return this.account.getAccountHistory() != null;
+    }
+
+    public boolean isThereRecurringTransactions(){
+        return this.account.getRecurringTransactions() != null;
+    }
+
+    public boolean calculateBalancesInOrder(){
+        return isThereAccountHistory() || isThereRecurringTransactions();
+    }
 }
