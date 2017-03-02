@@ -6,6 +6,10 @@ import java.util.List;
  * @author John A. Squier
  * add your name when you work on this file.
  * TODO figure out if the instance fields need to be Objects or if they can be primitives i.e. long vs Long.
+ *
+ * FROM THE FUNCITONAL REQUIREMENTS PDF
+ * "Account object with balance ✓ & interest rate ✓ properties, TRANSACTION HISTORY, overdraft ✓
+ *      & minimum balance info ✓ & a list of recurring transactions ✓"
  */
 public class Account {
 
