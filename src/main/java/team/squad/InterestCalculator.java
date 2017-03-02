@@ -69,7 +69,7 @@ public class InterestCalculator {
     }
 
     public long calculateSimpleInterest() {
-        return -1;
+        return (long) (account.getBalance()*account.getInterestRate()*(interval/365));
     }
 
     public long calculateComplexInterest() {

@@ -6,6 +6,7 @@ package team.squad;
  */
 public enum CalculationRule {
 
+    NONE,
     AVERAGE,
     MAXIMUM,
     MINIMUM,

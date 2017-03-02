@@ -1,5 +1,6 @@
 package team.squad;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,10 +12,11 @@ public class InterestCalculatorTests {
 
     InterestCalculator interestCalculator;
     Account normalNoRMBAccount;
+    Interval interval;
 
     @Before
     public void setup() {
-        interestCalculator = new InterestCalculator();
+
         normalNoRMBAccount = new Account();
         normalNoRMBAccount = new Account();
         normalNoRMBAccount.setBalance(100000L); //$1000.00
@@ -22,12 +24,31 @@ public class InterestCalculatorTests {
         normalNoRMBAccount.setInterestRate(0.10); // 10% APY
         normalNoRMBAccount.setOverDraftPenalty(0L); // when under $0.00 no interest
         normalNoRMBAccount.setRequiredMinimumBalance(50000L); //$500.00 no interest when this hits
-        normalNoRMBAccount.setIsMinimumBalanceRequired(false);
+
+
+        interestCalculator = new InterestCalculator();
+        interestCalculator.setAccount(normalNoRMBAccount);
+
     }
 
     @Test
     public void calcSimpleInterestNormalNoRMB(){
+        normalNoRMBAccount.setIsMinimumBalanceRequired(false);
+        interestCalculator.setInterestType(InterestType.SIMPLE);
+        interestCalculator.setCalculationRule(CalculationRule.NONE);
+        interestCalculator.setInterval(365);
+        long actualInt = interestCalculator.calculateSimpleInterest();
+        Assert.assertEquals(10000L, actualInt);
+    }
 
+    @Test
+    public void calcSimpleInterestNormalRMB(){
+        normalNoRMBAccount.setIsMinimumBalanceRequired(true);
+        interestCalculator.setInterestType(InterestType.SIMPLE);
+        interestCalculator.setCalculationRule(CalculationRule.NONE);
+        interestCalculator.setInterval(365);
+        long actualInt = interestCalculator.calculateSimpleInterest();
+        Assert.assertEquals(10000L, actualInt);
     }
     
     
