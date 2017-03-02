@@ -75,4 +75,18 @@ public class InterestCalculator {
     public long calculateComplexInterest() {
         return -1;
     }
+
+    public boolean isThereAccountHistory(){
+        return this.account.getAccountHistory() != null;
+    }
+
+    public boolean isThereRecurringTransactions(){
+        return this.account.getRecurringTransactions() != null;
+    }
+
+    public boolean calculateBalancesInOrder(){
+        return isThereAccountHistory() || isThereRecurringTransactions();
+    }
+
+
 }
