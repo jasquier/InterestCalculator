@@ -10,7 +10,7 @@ public enum CalculationRule {
     MAXIMUM,
     MINIMUM,
     TIME_OF_CREDIT,
-    EX_INTEREST_DATE,
-    THRESHOLD_MAXIMUM,
-    THRESHOLD_MINIMUM
+    EX_INTEREST_DATE, // num days
+    THRESHOLD_MAXIMUM, // num days
+    THRESHOLD_MINIMUM // num days
 }

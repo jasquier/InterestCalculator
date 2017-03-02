@@ -21,6 +21,7 @@ public class InterestCalculator {
     private Long interestAmount;
     private InterestType interestType;
     private CalculationRule calculationRule;
+    private Integer numDaysForRule;
 
     public Account getAccount() {
         return account;
