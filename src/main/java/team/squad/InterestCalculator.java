@@ -15,7 +15,10 @@ public class InterestCalculator {
 
     private Account account;
     private Interval interval;
+    private Interval frequency; // a.k.a compounding period
     private InterestType interestType;
+    private CalculationRule calculationRule;
+    private Long interestAmount;
 
     public void setAccount(Account account) {
         this.account = account;
@@ -25,7 +28,30 @@ public class InterestCalculator {
         this.interval = interval;
     }
 
+    public void setFrequency(Interval frequency) {
+        this.frequency = frequency;
+    }
+
     public void setInterestType(InterestType interestType) {
         this.interestType = interestType;
     }
+
+    public void setCalculationRule(CalculationRule calculationRule) {
+        this.calculationRule = calculationRule;
+    }
+
+    public Long getInterestAmount() {
+        interestAmount = 1337L;
+        return interestAmount;
+    }
+
+    public long calculateSimpleInterest() {
+        return -1;
+    }
+
+    public long calculateComplexInterest() {
+        return -1;
+    }
+
+
 }
