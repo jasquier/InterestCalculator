@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author John A. Squier
- * add your name when you work on this
+ * add your name when you work on this file
  */
 @RestController
 public class Controller {

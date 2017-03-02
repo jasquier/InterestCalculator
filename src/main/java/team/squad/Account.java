@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author John A. Squier
- *
+ * add your name when you work on this file.
  *
  * TODO figure out if the instance fields need to be Objects or if they can be primitives i.e. long vs Long.
  * TODO is the transaction history what we would make persistent?
