@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * @author John A. Squier
- * add your name when you work on this file.
+ *
  *
  * TODO figure out if the instance fields need to be Objects or if they can be primitives i.e. long vs Long.
  * TODO is the transaction history what we would make persistent?
@@ -23,6 +23,34 @@ public class Account {
     private Long requiredMinimumBalance;
     private Boolean isMinimumBalanceRequired;
     private List<RecurringTransaction> recurringTransactions;
+
+    public Long getBalance() {
+        return balance;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public Double getInterestRate() {
+        return interestRate;
+    }
+
+    public Long getOverDraftPenalty() {
+        return overDraftPenalty;
+    }
+
+    public Long getRequiredMinimumBalance() {
+        return requiredMinimumBalance;
+    }
+
+    public Boolean getIsMinimumBalanceRequired() {
+        return isMinimumBalanceRequired;
+    }
+
+    public List<RecurringTransaction> getRecurringTransactions() {
+        return recurringTransactions;
+    }
 
     public void setBalance(Long balance) {
         this.balance = balance;
@@ -44,8 +72,8 @@ public class Account {
         this.requiredMinimumBalance = requiredMinimumBalance;
     }
 
-    public void setMinimumBalanceRequired(Boolean minimumBalanceRequired) {
-        isMinimumBalanceRequired = minimumBalanceRequired;
+    public void setIsMinimumBalanceRequired(Boolean isMinimumBalanceRequired) {
+        this.isMinimumBalanceRequired = isMinimumBalanceRequired;
     }
 
     public void setRecurringTransactions(List<RecurringTransaction> recurringTransactions) {
