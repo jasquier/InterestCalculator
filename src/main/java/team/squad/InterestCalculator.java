@@ -16,9 +16,9 @@ public class InterestCalculator {
     private Account account;
     private Interval interval;
     private Interval frequency; // a.k.a compounding period
+    private Long interestAmount;
     private InterestType interestType;
     private CalculationRule calculationRule;
-    private Long interestAmount;
 
     public void setAccount(Account account) {
         this.account = account;
@@ -52,6 +52,4 @@ public class InterestCalculator {
     public long calculateComplexInterest() {
         return -1;
     }
-
-
 }
