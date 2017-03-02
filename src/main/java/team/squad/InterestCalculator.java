@@ -20,6 +20,31 @@ public class InterestCalculator {
     private InterestType interestType;
     private CalculationRule calculationRule;
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public Interval getInterval() {
+        return interval;
+    }
+
+    public Long getInterestAmount() {
+        interestAmount = 1337L;
+        return interestAmount;
+    }
+
+    public Interval getFrequency() {
+        return frequency;
+    }
+
+    public InterestType getInterestType() {
+        return interestType;
+    }
+
+    public CalculationRule getCalculationRule() {
+        return calculationRule;
+    }
+
     public void setAccount(Account account) {
         this.account = account;
     }
@@ -38,11 +63,6 @@ public class InterestCalculator {
 
     public void setCalculationRule(CalculationRule calculationRule) {
         this.calculationRule = calculationRule;
-    }
-
-    public Long getInterestAmount() {
-        interestAmount = 1337L;
-        return interestAmount;
     }
 
     public long calculateSimpleInterest() {
