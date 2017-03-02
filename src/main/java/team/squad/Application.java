@@ -3,10 +3,13 @@ package team.squad;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author John A. Squier
+ */
 @SpringBootApplication
-public class InterestcalculatorApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(InterestcalculatorApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 }

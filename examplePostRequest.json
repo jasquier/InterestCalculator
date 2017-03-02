@@ -1,0 +1,15 @@
+{
+  "account": {
+    "balance": 10,
+    "accountType": "savings",
+    "interestRate": 0.55,
+    "overDraftPenalty": 0,
+    "requiredMinimumBalance": 0,
+    "isMinimumBalanceRequired": true,
+    "recurringTransactions": null
+  },
+  "interval": 0,
+  "frequency": 1,
+  "interestType": 0,
+  "calculationRule": 0
+}
