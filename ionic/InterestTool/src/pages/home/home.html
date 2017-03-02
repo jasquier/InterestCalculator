@@ -1,56 +1,70 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      About
+    </ion-title>
+  </ion-navbar>
+</ion-header>
 
-  <ion-content padding="true" class="has-header">
-    <h2 id="kQNDBankSimpleInterest-heading2" style="color:#000000;text-align:center;">KQND Bank</h2>
-    <h3 id="kQNDBankSimpleInterest-heading4" style="color:#000000;text-align:center;">Simple Interest Calc.</h3>
-    <form id="kQNDBankSimpleInterest-form3" class="list" (ngSubmit)="logForm()">
-      <ion-label class="item item-input" id="kQNDBankSimpleInterest-input13">
-        <span class="input-label">Account Type</span>
-        <ion-input type="text" placeholder="checking" [(ngModel)]="form.accountType" name="accountType"></ion-input>
-      </ion-label>
-      <ion-label class="item item-input" id="kQNDBankSimpleInterest-input6">
-        <span class="input-label">Balance</span>
-        <input type="number" placeholder="3664823">
-      </ion-label>
-      <ion-label class="item item-input" id="kQNDBankSimpleInterest-input7">
-        <span class="input-label">Interest Rate</span>
-        <input type="number" placeholder="1.20">
-      </ion-label>
-      <ion-label class="item item-input" id="kQNDBankSimpleInterest-input8">
-        <span class="input-label">Overdraft Penalty</span>
-        <input type="number" placeholder="600">
-      </ion-label>
-      <ion-toggle toggle-class="toggle-balanced" ng-checked="true" id="kQNDBankSimpleInterest-toggle3">Is Minimum Balance Required?</ion-toggle>
-      <ion-label class="item item-input" id="kQNDBankSimpleInterest-input9">
-        <span class="input-label">Required Minimum Balance</span>
-        <input type="number" placeholder="1000">
-      </ion-label>
-      <ion-label class="item item-input" id="kQNDBankSimpleInterest-input10">
-        <span class="input-label">Interval</span>
-        <input type="number" placeholder="683">
-      </ion-label>
-    </form>
-    <form id="kQNDBankSimpleInterest-form5" class="list">
-      <ion-toggle toggle-class="toggle-balanced" ng-checked="true" id="kQNDBankSimpleInterest-toggle7">Recurring Payments?</ion-toggle>
-      <ion-label class="item item-input" id="kQNDBankSimpleInterest-input16">
-        <span class="input-label">Frequency</span>
-        <input type="number" placeholder="20">
-      </ion-label>
-      <ion-label class="item item-input" id="kQNDBankSimpleInterest-input15">
-        <span class="input-label">Amount</span>
-        <input type="number" placeholder="23234">
-      </ion-label>
-      <form id="kQNDBankSimpleInterest-form6" class="list">
-        <ion-toggle toggle-class="toggle-balanced" ng-checked="true" id="kQNDBankSimpleInterest-toggle9">Upload Account History?</ion-toggle>
-        <ion-label class="item item-input" id="kQNDBankSimpleInterest-input20">
-          <span class="input-label">Amount</span>
-          <input type="number" placeholder="-23232">
-        </ion-label>
-        <ion-label class="item item-input" id="kQNDBankSimpleInterest-input18">
-          <span class="input-label">Date</span>
-          <input type="date" placeholder="">
-        </ion-label>
-      </form>
-      <button ion-button type="submit" block>Submit Form</button>
-    </form>
-  </ion-content>
+<ion-content padding>
 
+<ion-item>
+  <ion-label>Is Minimum Balance Required?</ion-label>
+  <ion-toggle></ion-toggle>
+</ion-item>
+
+<ion-item>
+  <ion-label> Recurring Payments?</ion-label>
+  <ion-toggle></ion-toggle>
+</ion-item>
+
+<ion-item>
+  <ion-label> Upload Account History</ion-label>
+  <ion-toggle></ion-toggle>
+</ion-item>
+
+<ion-list>
+  <ion-item>
+    <ion-label color="primary">Account Type</ion-label>
+    <ion-input placeholder="Checking, Savings, Etc"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="primary">Balance</ion-label>
+    <ion-input placeholder="5434345435"></ion-input>
+  </ion-item>
+
+    <ion-item>
+    <ion-label color="primary">Interest Rate</ion-label>
+    <ion-input placeholder="1.20"></ion-input>
+  </ion-item>
+
+    <ion-item>
+    <ion-label color="primary">Overdraft Penalty</ion-label>
+    <ion-input placeholder="4535543"></ion-input>
+  </ion-item>
+
+    <ion-item>
+    <ion-label color="primary">Required Minimum Balance</ion-label>
+    <ion-input placeholder="1000"></ion-input>
+  </ion-item>
+
+    <ion-item>
+    <ion-label color="primary">Interval</ion-label>
+    <ion-input placeholder="5"></ion-input>
+  </ion-item>
+
+    <ion-item>
+    <ion-label color="primary">Frequency</ion-label>
+    <ion-input placeholder="365"></ion-input>
+  </ion-item>
+
+    <ion-item>
+    <ion-label color="primary">Amount</ion-label>
+    <ion-input placeholder="2000"></ion-input>
+  </ion-item>
+
+
+  </ion-list>
+
+</ion-content>
