@@ -71,12 +71,15 @@ public class InterestCalculator {
     }
 
     public void calculateSimpleInterest() {
+        if( canEarnInterest())
             interestAmount = (long) (account.getBalance()*setRMBInterest()*(interval/365));
+        else
+            interestAmount = 0L;
     }
 
     public void calculateComplexInterest() {
         //A = P (1 + r/n) (nt)
-        long initialPrinciple = account.getBalance();
+        long initialPrinciple = account.getBalance() - getOverDraftPenalty();
         double rate = setRMBInterest();
         double compoundedOverYears = frequency * (interval/365);
         interestAmount = (long) (initialPrinciple * (Math.pow(1+ rate, compoundedOverYears) - 1));
@@ -110,6 +113,23 @@ public class InterestCalculator {
         return (isOverDrawn()) ? account.getOverDraftPenalty() : 0;
     }
 
+    protected double getOverDraftInterest(){
+        return (isOverDrawn()) ? 0.00 : account.getInterestRate();
+    }
+
+    private double getInterestRate() {
+        double rate;
+        rate = getOverDraftInterest();
+        rate = setRMBInterest();
+        return rate;
+    }
+    private boolean canEarnInterest(){
+        return !isUnderRMB() &&  isPositiveBalance();
+    }
+
+    private boolean isPositiveBalance() {
+        return account.getBalance() > 0;
+    }
 
 
 }
