@@ -1,4 +1,6 @@
-package team.squad;
+package team.squad.interest;
+
+import team.squad.accounts.Account;
 
 /**
  * @author John A. Squier
@@ -22,6 +24,8 @@ public class InterestCalculator {
     private InterestType interestType;
     private CalculationRule calculationRule;
     private Integer numDaysForRule;
+
+
 
     public Long getInterestAmount() {
         if ( interestType.equals(InterestType.SIMPLE) ) {

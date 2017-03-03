@@ -1,4 +1,4 @@
-package team.squad;
+package team.squad.accounts;
 
 import java.util.List;
 
@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class Account {
 
+    private String ID;
     private Long balance; // in pennies
     private Long ledgerBalance;
     private String accountType; // does this even matter?
@@ -26,6 +27,14 @@ public class Account {
     private Boolean isMinimumBalanceRequired;
     private List<RecurringTransaction> recurringTransactions;
     private List<PastTransaction> accountHistory;
+
+    public static Account getAccountInfoByID(String ID) {
+        // this will hit the database at some point
+        // this is most definitely wrong
+        return new Account();
+    }
+
+    public String getID() { return "27"; }
 
     public Long getBalance() {
         return balance;
@@ -104,13 +113,13 @@ public class Account {
         Long adjustedAmount = 0L;
 
         for ( RecurringTransaction r : recurringTransactions ) {
-            if ( r.getFrequency().equals(Interval.DAILY) ) {
+            if ( r.getFrequency().equals(365) ) {
                 adjustedAmount += r.getAmount() * interval;
             }
-            else if ( r.getFrequency().equals(Interval.MONTHLY) ) {
+            else if ( r.getFrequency().equals(12) ) {
                 adjustedAmount += r.getAmount() * (interval / 30);
             }
-            else if ( r.getFrequency().equals(Interval.ANNUALLY) ) {
+            else if ( r.getFrequency().equals(1) ) {
                 adjustedAmount += r.getAmount() * (interval / 365);
             }
         }
