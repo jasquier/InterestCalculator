@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { InterestService } from '../../services/interest-service';
 
 /*
   Generated class for the Complex page.
@@ -12,11 +13,17 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'complex.html'
 })
 export class ComplexPage {
+  InterestService:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public interestService:InterestService) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ComplexPage');
+  }
+
+  callInterestService(){
+    this.interestService.testInterestValue();
+    console.log("hi john");
   }
 
 }
