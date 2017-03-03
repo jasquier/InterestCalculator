@@ -35,7 +35,7 @@ public class AccountTests {
         credit.setFrequency(Interval.MONTHLY);
 
         RecurringTransaction credit2 = new RecurringTransaction();
-        credit2.setAmount(500000L);
+        credit2.setAmount(500000L); // $5000.00 a year added in
         credit2.setFrequency(Interval.ANNUALLY);
 
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
@@ -58,7 +58,7 @@ public class AccountTests {
     }
 
     @Test
-    public void calculateLedgerBalanceTestWithAnual() {
+    public void calculateLedgerBalanceTest2() {
         Long expected = 537500L; // what should the expected ledger balance be?
 
         accountWithHistory.calculateLedgerBalance(365); // 30 days
@@ -67,14 +67,4 @@ public class AccountTests {
         Assert.assertEquals("I expect the ledger balance to be 437500",
                 expected, actual);
     }
-
-    //@Test
-    //public void CalculateSimple
-
-
-
-
-
-
-
 }

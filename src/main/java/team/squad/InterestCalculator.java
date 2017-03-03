@@ -23,30 +23,15 @@ public class InterestCalculator {
     private CalculationRule calculationRule;
     private Integer numDaysForRule;
 
-//    public Account getAccount() {
-//        return account;
-//    }
-//
-//    public Integer getInterval() {
-//        return interval;
-//    }
-
     public Long getInterestAmount() {
-        calculateSimpleInterest();
+        if ( interestType.equals(InterestType.SIMPLE) ) {
+            calculateSimpleInterest();
+        }
+        else {
+            calculateComplexInterest();
+        }
         return interestAmount;
     }
-
-//    public Integer getFrequency() {
-//        return frequency;
-//    }
-//
-//    public InterestType getInterestType() {
-//        return interestType;
-//    }
-//
-//    public CalculationRule getCalculationRule() {
-//        return calculationRule;
-//    }
 
     public void setAccount(Account account) {
         this.account = account;
