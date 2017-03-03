@@ -2,6 +2,10 @@ package team.squad.interest;
 
 import team.squad.accounts.Account;
 import team.squad.accounts.AccountStore;
+import team.squad.accounts.PastTransaction;
+
+import java.util.Collections;
+import java.util.*;
 
 /**
  * @author John A. Squier
@@ -139,4 +143,17 @@ public class InterestCalculator {
         return account.getBalance() > 0;
     }
 
+    public long balanceMinimum(){
+        List<PastTransaction> accountHistory = account.getAccountHistory();
+        ArrayList<Long> balanceHistory = new ArrayList<>();
+        long balance = account.getBalance();
+        Collections.reverse(accountHistory);
+
+        for (PastTransaction item: accountHistory) {
+            balance -= item.getAmount();
+            balanceHistory.add(balance);
+        }
+        Collections.sort(balanceHistory);
+        return balanceHistory.get(0);
+    }
 }
