@@ -14,41 +14,48 @@ import java.util.List;
 public class AccountTests {
 
     private Account accountWithHistory;
-    private Account accountWithoutHistory;
 
     @Before
     public void setup() {
         accountWithHistory = new Account();
         accountWithHistory.setBalance(100000L); //$1000.00
-        accountWithHistory.setAccountType("savings"); // this doesn't matter does it?
+        accountWithHistory.setAccountType("savings");
         accountWithHistory.setInterestRate(0.10); // 10% APY
         accountWithHistory.setOverDraftPenalty(0L); // when under $0.00 no interest
         accountWithHistory.setRequiredMinimumBalance(50000L); //$500.00 no interest when this hits
         accountWithHistory.setIsMinimumBalanceRequired(true);
 
-        RecurringTransaction credit = new RecurringTransaction();
-        credit.setAmount(10000L); // $100.00 a month added in
-        credit.setFrequency(Interval.MONTHLY);
-
-        RecurringTransaction debit = new RecurringTransaction();
-        debit.setAmount(500L);   // $5.00 a day taken out
-        debit.setFrequency(Interval.DAILY);
+        RecurringTransaction debit5DollarsPerDay = new RecurringTransaction(-500L, Interval.DAILY);
+        RecurringTransaction credit100DollarsPerMonth = new RecurringTransaction(10000L, Interval.MONTHLY);
+        RecurringTransaction credit5000DollarsPerYear = new RecurringTransaction(500000L, Interval.ANNUALLY);
 
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
-        recurringTransactions.add(credit);
-        recurringTransactions.add(debit);
+        recurringTransactions.add(credit100DollarsPerMonth);
+        recurringTransactions.add(debit5DollarsPerDay);
+        recurringTransactions.add(credit5000DollarsPerYear);
 
         accountWithHistory.setRecurringTransactions(recurringTransactions);
     }
 
     @Test
     public void calculateLedgerBalanceTest() {
-        Long expected = 100L; // what should the expected ledger balance be?
+        Long expected = 95000L;
 
-        accountWithHistory.calculateLedgerBalance(30); // 30 days
+        accountWithHistory.calculateLedgerBalance(30);
         Long actual = accountWithHistory.getLedgerBalance();
 
-        Assert.assertEquals("I expect the ledger balance to be ...",
+        Assert.assertEquals("I expect the ledger balance to be 95000 cents or $950.00",
+                expected, actual);
+    }
+
+    @Test
+    public void calculateLedgerBalanceTest2() {
+        Long expected = 537500L; // what should the expected ledger balance be?
+
+        accountWithHistory.calculateLedgerBalance(365); // 30 days
+        Long actual = accountWithHistory.getLedgerBalance();
+
+        Assert.assertEquals("I expect the ledger balance to be 437500 cents or $4375.00",
                 expected, actual);
     }
 }
