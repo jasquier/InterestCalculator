@@ -23,30 +23,30 @@ public class InterestCalculator {
     private CalculationRule calculationRule;
     private Integer numDaysForRule;
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public Integer getInterval() {
-        return interval;
-    }
+//    public Account getAccount() {
+//        return account;
+//    }
+//
+//    public Integer getInterval() {
+//        return interval;
+//    }
 
     public Long getInterestAmount() {
-        interestAmount = 1337L;
+        calculateSimpleInterest();
         return interestAmount;
     }
 
-    public Integer getFrequency() {
-        return frequency;
-    }
-
-    public InterestType getInterestType() {
-        return interestType;
-    }
-
-    public CalculationRule getCalculationRule() {
-        return calculationRule;
-    }
+//    public Integer getFrequency() {
+//        return frequency;
+//    }
+//
+//    public InterestType getInterestType() {
+//        return interestType;
+//    }
+//
+//    public CalculationRule getCalculationRule() {
+//        return calculationRule;
+//    }
 
     public void setAccount(Account account) {
         this.account = account;
@@ -68,8 +68,11 @@ public class InterestCalculator {
         this.calculationRule = calculationRule;
     }
 
-    public long calculateSimpleInterest() {
-        return (long) (account.getBalance()*account.getInterestRate()*(interval/365));
+    public void calculateSimpleInterest() {
+        if(!isUnderRMB())
+            interestAmount = (long) (account.getBalance()*account.getInterestRate()*(interval/365));
+        else
+            interestAmount = 0L;
     }
 
     public long calculateComplexInterest() {
@@ -84,11 +87,11 @@ public class InterestCalculator {
         return (isUnderRMB()) ? 0.00 : account.getInterestRate();
     }
 
-    public boolean isThereAccountHistory(){
+    protected boolean isThereAccountHistory(){
         return this.account.getAccountHistory() != null;
     }
 
-    public boolean isThereRecurringTransactions(){
+    protected boolean isThereRecurringTransactions(){
         return this.account.getRecurringTransactions() != null;
     }
 
@@ -103,5 +106,7 @@ public class InterestCalculator {
     protected long setOverDraftPenalty(){
         return (isOverDrawn()) ? account.getOverDraftPenalty() : 0;
     }
+
+
 
 }
