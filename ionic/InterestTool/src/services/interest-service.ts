@@ -13,7 +13,7 @@ export class InterestService {
 
     getInterestValue(balance: number, accountType: string, interestRate:number, overDraftPenalty:number,
     requiredMinimumBalance:number, isMinimumBalanceRequired:boolean, recurringTransactions:[any], accountHistory:[any],
-     interval:number, frequency:number,interestType:number, calculationRule:number, numDaysForRule:number) {
+     interval:number, frequency:number,interestType:any, calculationRule:number, numDaysForRule:number) {
         this.data = {
             "account": {
                 "balance": balance,
@@ -27,15 +27,21 @@ export class InterestService {
             },
             "interval": interval,
             "frequency": frequency,
-            "interestType": interestRate,
+            "interestType": interestType,
             "calculationRule": calculationRule,
             "numDaysForRule": numDaysForRule
         };
-        
+
+        console.log(this.data);
+        console.log(this.url);
         this.http.post(this.url, this.data).subscribe(response => {
             this.responseData = response.json();
             console.log(this.responseData);
             this.interestValue = this.responseData.interestValue;
         });
+    }
+
+    testInterestValue(){
+        this.getInterestValue(100000,"Savings",0.1,0,0,false,null,null,365,0,"SIMPLE",0,0);
     }
 }
