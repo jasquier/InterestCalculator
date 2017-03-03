@@ -16,15 +16,15 @@ public class Controller {
     @RequestMapping(value = "/createAccount", method = RequestMethod.POST, consumes = {"application/json"})
     public @ResponseBody
     Account createAccountAndGetID(@RequestBody Account account) {
-        return AccountBuilder.createAccount();
+        return account;
     }
 
-    // Get account info GET
-    @CrossOrigin
-    @RequestMapping(value = "/getAccount", method = RequestMethod.GET, consumes = {"text/plain"})
-    public @ResponseBody Account getAccountInfo(String ID) {
-        return Account.getAccountInfoByID(ID);
-    }
+//    // Get account info GET
+//    @CrossOrigin
+//    @RequestMapping(value = "/getAccount", method = RequestMethod.GET, consumes = {"text/plain"})
+//    public @ResponseBody Account getAccountInfo(String ID) {
+//
+//    }
 
     // Calculate interest GET
 //    @CrossOrigin

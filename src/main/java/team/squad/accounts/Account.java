@@ -1,5 +1,7 @@
 package team.squad.accounts;
 
+import team.squad.builders.AccountBuilder;
+
 import java.util.List;
 
 /**
@@ -28,11 +30,21 @@ public class Account {
     private List<RecurringTransaction> recurringTransactions;
     private List<PastTransaction> accountHistory;
 
-    public static Account getAccountInfoByID(String ID) {
-        // this will hit the database at some point
-        // this is most definitely wrong
-        return new Account();
+    public Account(AccountBuilder builder) {
+
+
     }
+
+    public Account() {
+
+    }
+//
+//
+//    public static Account getAccountInfoByID(String ID) {
+//        // this will hit the database at some point
+//        // this is most definitely wrong
+//        return new Account();
+//    }
 
     public String getID() { return "27"; }
 
