@@ -3,6 +3,8 @@ package team.squad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import team.squad.accounts.Account;
+import team.squad.accounts.RecurringTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
