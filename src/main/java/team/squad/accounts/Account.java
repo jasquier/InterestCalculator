@@ -30,14 +30,7 @@ public class Account {
     private List<RecurringTransaction> recurringTransactions;
     private List<PastTransaction> accountHistory;
 
-    public Account(AccountBuilder builder) {
-
-
-    }
-
-    public Account() {
-
-    }
+    public Account() { }
 //
 //
 //    public static Account getAccountInfoByID(String ID) {
@@ -85,7 +78,12 @@ public class Account {
     }
 
     public void setBalance(Long balance) {
-        this.balance = balance;
+        if ( this.balance == null ) {
+            this.balance = 0L;
+        }
+        else {
+            this.balance = balance;
+        }
     }
 
     public void setAccountType(String accountType) {

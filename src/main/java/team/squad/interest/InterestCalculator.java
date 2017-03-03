@@ -25,7 +25,7 @@ public class InterestCalculator {
     private CalculationRule calculationRule;
     private Integer numDaysForRule;
 
-
+    public InterestCalculator() { }
 
     public Long getInterestAmount() {
         if ( interestType.equals(InterestType.SIMPLE) ) {
