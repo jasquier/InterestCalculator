@@ -17,47 +17,54 @@ public class InterestCalculatorTests {
     public void setup() {
 
         account = new Account();
-        account = new Account();
         account.setBalance(100000L); //$1000.00
-        account.setAccountType("savings"); // this doesn't matter does it?
         account.setInterestRate(0.10); // 10% APY
+        account.setAccountType("savings");
         account.setOverDraftPenalty(0L); // when under $0.00 no interest
-        account.setRequiredMinimumBalance(50000L); //$500.00 no interest when this hits
-
 
         interestCalculator = new InterestCalculator();
+        interestCalculator.setInterestType(InterestType.SIMPLE);
+        interestCalculator.setCalculationRule(CalculationRule.NONE);
+        interestCalculator.setInterval(365);
         interestCalculator.setAccount(account);
 
     }
 
     @Test
     public void calcSimpleInterestNormalNoRMB(){
+        long expected = 10000L;
         account.setIsMinimumBalanceRequired(false);
-        interestCalculator.setInterestType(InterestType.SIMPLE);
-        interestCalculator.setCalculationRule(CalculationRule.NONE);
-        interestCalculator.setInterval(365);
+        account.setRequiredMinimumBalance(0L);
+
         interestCalculator.calculateSimpleInterest();
-        Assert.assertEquals(10000L, (long)interestCalculator.getInterestAmount());
+        long actual = interestCalculator.getInterestAmount();
+
+
+        Assert.assertEquals("I expect the interest to be $100.00",
+                expected, actual);
     }
 
     @Test
     public void calcSimpleInterestNormalRMB(){
+        long expected = 10000L;
         account.setIsMinimumBalanceRequired(true);
-        interestCalculator.setInterestType(InterestType.SIMPLE);
-        interestCalculator.setCalculationRule(CalculationRule.NONE);
-        interestCalculator.setInterval(365);
+        account.setRequiredMinimumBalance(0L);
+
         interestCalculator.calculateSimpleInterest();
-        Assert.assertEquals(10000L, (long)interestCalculator.getInterestAmount());
+        long actual = interestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
     }
 
     @Test
     public void calcSimpleInterestNormalBelowRMB(){
-        account.setRequiredMinimumBalance(500000L); //$5000.00 no interest when this hits
+        long expected = 0L;
         account.setIsMinimumBalanceRequired(true);
-        interestCalculator.setInterestType(InterestType.SIMPLE);
-        interestCalculator.setCalculationRule(CalculationRule.NONE);
-        interestCalculator.setInterval(365);
+        account.setRequiredMinimumBalance(500000L);
+
         interestCalculator.calculateSimpleInterest();
-        Assert.assertEquals(0L, (long)interestCalculator.getInterestAmount());
+        long actual = interestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
     }
 }
