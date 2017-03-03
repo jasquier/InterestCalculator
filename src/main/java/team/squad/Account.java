@@ -1,5 +1,9 @@
 package team.squad;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.List;
 
 /**
@@ -15,8 +19,13 @@ import java.util.List;
  * "Account object with balance ✓ & interest rate ✓ properties, TRANSACTION HISTORY (is this ledger balance?),
  *      overdraft ✓ & minimum balance info ✓ & a list of recurring transactions ✓"
  */
+@Entity
 public class Account {
 
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO)
+    private Long id;
+    private Long accountNumber;
     private Long balance; // in pennies
     private Long ledgerBalance;
     private String accountType; // does this even matter?
@@ -26,6 +35,14 @@ public class Account {
     private Boolean isMinimumBalanceRequired;
     private List<RecurringTransaction> recurringTransactions;
     private List<PastTransaction> accountHistory;
+
+    public Long getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
     public Long getBalance() {
         return balance;
