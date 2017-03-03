@@ -6,8 +6,6 @@
   </ion-navbar>
 </ion-header>
 
-<ion-menu side="right" [content]="mycontent">...</ion-menu>
-
 <ion-content padding>
   <ion-list>
 
@@ -81,6 +79,19 @@
     <ion-toggle [(ngModel)]="accountHistoryExists"></ion-toggle>
     </ion-item>
 
+    <ion-item>
+    <ion-label *ngIf="accountHistoryExists" color="primary">What balance calculation rule should be applied?</ion-label>
+    <ion-select [(ngModel)]="method" *ngIf="accountHistoryExists" placeholder="Time of credit">
+      <ion-option value="timeOfCredit">Time of credit</ion-option>
+      <ion-option value="exInterestDate">Ex-interest date</ion-option>
+      <ion-option value="average">Average</ion-option>
+      <ion-option value="maxBalance">Maximum balance</ion-option>
+      <ion-option value="minBalance">Minimum balance</ion-option>
+      <ion-option value="thresholdMax">Threshold maximum</ion-option>
+      <ion-option value="thresholdMin">Threshold minimum</ion-option>
+    </ion-select>
+   </ion-item>
+
     <ion-item *ngIf="accountHistoryExists">
     <ion-label color="primary">Amount</ion-label>
     <ion-input placeholder="2000"></ion-input>
@@ -90,6 +101,13 @@
    <ion-label color="primary">Date</ion-label>
    <ion-datetime displayFormat="MM/DD/YYYY" placeholder="11/19/1993"></ion-datetime>
    </ion-item>
+
+         <ion-item *ngIf="accountHistoryExists">
+       <ion-item *ngIf="method === 'thresholdMax' || method === 'thresholdMin'">
+     <ion-label *ngIf="accountHistoryExists" color="primary">How many days?</ion-label>
+    <ion-input *ngIf="accountHistoryExists" placeholder="4"></ion-input>
+    </ion-item>
+    </ion-item>
 
     </ion-list>
 

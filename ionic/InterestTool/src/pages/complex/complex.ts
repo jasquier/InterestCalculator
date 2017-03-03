@@ -10,7 +10,6 @@ import { NavController, NavParams } from 'ionic-angular';
 @Component({
   selector: 'page-complex',
   templateUrl: 'complex.html'
-  selectedValue:
 })
 export class ComplexPage {
 
