@@ -62,7 +62,10 @@ public class InterestCalculator {
     }
 
     public void calculateSimpleInterest() {
+        if( canEarnInterest())
             interestAmount = (long) (account.getBalance()*setRMBInterest()*(interval/365));
+        else
+            interestAmount = 0L;
     }
 
     public void calculateComplexInterest() {
@@ -101,6 +104,13 @@ public class InterestCalculator {
         return (isOverDrawn()) ? account.getOverDraftPenalty() : 0;
     }
 
+    private boolean canEarnInterest(){
+        return !isUnderRMB() &&  isPositiveBalance();
+    }
+
+    private boolean isPositiveBalance() {
+        return account.getBalance() > 0;
+    }
 
 
 }
