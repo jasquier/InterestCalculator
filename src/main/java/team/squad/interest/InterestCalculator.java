@@ -129,7 +129,7 @@ public class InterestCalculator {
     }
 
     protected long getAverageAccountBalance(){
-        return account.AverageBalance();
+        return account.AverageBalance(12);
     }
 
 
