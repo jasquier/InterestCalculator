@@ -58,24 +58,23 @@ public class InterestCalculator {
     }
 
     public void calculateSimpleInterest() {
-        if(!isUnderRMB())
-            interestAmount = (long) (account.getBalance()*account.getInterestRate()*(interval/365));
-        else
-            interestAmount = 0L;
+            interestAmount = (long) (account.getBalance()*setRMBInterest()*(interval/365));
     }
 
     public void calculateComplexInterest() {
-
         //A = P (1 + r/n) (nt)
-        interestAmount = (long) (account.getBalance() *(Math.pow(1+(account.getInterestRate()/frequency), frequency*(interval/365)) - 1));
+        long initialPrinciple = account.getBalance();
+        double rate = account.getInterestRate()/frequency;
+        double compoundedOverYears = frequency * (interval/365);
+        interestAmount = (long) (initialPrinciple * (Math.pow(1+ rate, compoundedOverYears) - 1));
     }
 
     protected boolean isUnderRMB(){
         return (account.getBalance() <= account.getRequiredMinimumBalance());
     }
 
-    protected double setRMBinterest() {
-        return (isUnderRMB()) ? 0.00 : account.getInterestRate();
+    protected double setRMBInterest() {
+        return (account.getIsMinimumBalanceRequired() && isUnderRMB()) ? 0.00 : account.getInterestRate();
     }
 
     protected boolean isThereAccountHistory(){
@@ -91,10 +90,10 @@ public class InterestCalculator {
     }
 
     protected boolean isOverDrawn(){
-        return account.getBalance() < 0;
+        return  account.getIsMinimumBalanceRequired() && account.getBalance() < 0;
     }
 
-    protected long setOverDraftPenalty(){
+    protected long getOverDraftPenalty(){
         return (isOverDrawn()) ? account.getOverDraftPenalty() : 0;
     }
 
