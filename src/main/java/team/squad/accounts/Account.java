@@ -1,6 +1,12 @@
 package team.squad.accounts;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -19,12 +25,21 @@ import java.util.List;
  * "Account object with balance ✓ & interest rate ✓ properties, TRANSACTION HISTORY (is this ledger balance?),
  *      overdraft ✓ & minimum balance info ✓ & a list of recurring transactions ✓"
  */
+
+@Entity
+
 // this isn't right
 @JsonIgnoreProperties(value = {"balance", "ledgerBalance", "accountType",
                                 "interestRate", "overDraftPenalty", "requiredMinimumBalance",
                                 "isMinimumBalanceRequired", "recurringTransactions",
                                 "accountHistory"}, allowSetters = true)
 public class Account {
+
+
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO)
+    private Long id;
+    private Long accountNumber;
 
     private Integer ID;
     private static Integer nextID = 1;
@@ -37,6 +52,16 @@ public class Account {
     private Boolean isMinimumBalanceRequired;
     private List<RecurringTransaction> recurringTransactions;
     private List<PastTransaction> accountHistory;
+
+    public Long getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public Account() { }
 
     public Account() {
         ID = nextID++;
