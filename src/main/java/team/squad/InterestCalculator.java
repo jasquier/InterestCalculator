@@ -53,6 +53,10 @@ public class InterestCalculator {
         this.calculationRule = calculationRule;
     }
 
+    public void setNumDaysForRule(Integer numDaysForRule) {
+        this.numDaysForRule = numDaysForRule;
+    }
+
     public void calculateSimpleInterest() {
         if(!isUnderRMB())
             interestAmount = (long) (account.getBalance()*account.getInterestRate()*(interval/365));
@@ -60,8 +64,8 @@ public class InterestCalculator {
             interestAmount = 0L;
     }
 
-    public long calculateComplexInterest() {
-        return -1;
+    public void calculateComplexInterest() {
+        interestAmount = -1L;
     }
 
     protected boolean isUnderRMB(){

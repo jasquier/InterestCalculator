@@ -29,10 +29,12 @@ public class InterestCalculatorTests {
         simpleInterestCalculator.setAccount(account);
 
         complexInterestCalculator = new InterestCalculator();
+        complexInterestCalculator.setAccount(account);
+        complexInterestCalculator.setInterval(365);
+        complexInterestCalculator.setFrequency(30); // monthly
         complexInterestCalculator.setInterestType(InterestType.COMPLEX);
         complexInterestCalculator.setCalculationRule(CalculationRule.NONE);
-        complexInterestCalculator.setInterval(365);
-        complexInterestCalculator.setAccount(account);
+        complexInterestCalculator.setNumDaysForRule(0);
     }
 
     @Test
@@ -121,8 +123,44 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndNoRMB() {
-        long expected = -1L; // TODO calculate this value
+        long expected = -2L; // TODO calculate this value
         account.setBalance(500000L); // $5000.00
+        account.setIsMinimumBalanceRequired(false);
+        account.setRequiredMinimumBalance(0L);
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestWithNonZeroBalanceAndAboveRMB() {
+        long expected = -2L;
+        account.setBalance(500000L); // $5000.00
+        account.setIsMinimumBalanceRequired(true);
+        account.setRequiredMinimumBalance(10000L);
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestWithNonZeroBalanceAndBelowRMB() {
+        long expected = -2L;
+        account.setBalance(10000L); // $100.00
+        account.setIsMinimumBalanceRequired(true);
+        account.setRequiredMinimumBalance(50000L); // $500.00
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestWithZeroBalanceAndNoRMB() {
+        long expected = -2L;
+        account.setBalance(0L);
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
 
