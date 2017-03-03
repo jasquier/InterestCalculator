@@ -18,11 +18,11 @@
     "accountHistory": [
       {
         "amount":100,
-        "dateOccuredOn": null
+        "dateOccurredOn": null
       },
       {
         "amount":-500,
-        "dateOccuredOn": null
+        "dateOccurredOn": null
       }]
   },
   "interval": 365,
