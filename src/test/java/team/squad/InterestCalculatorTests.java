@@ -35,7 +35,7 @@ public class InterestCalculatorTests {
         complexInterestCalculator = new InterestCalculator();
         complexInterestCalculator.setAccount(account);
         complexInterestCalculator.setInterval(365);
-        complexInterestCalculator.setFrequency(30); // monthly
+        complexInterestCalculator.setFrequency(12); // monthly
         complexInterestCalculator.setInterestType(InterestType.COMPLEX);
         complexInterestCalculator.setCalculationRule(CalculationRule.NONE);
         complexInterestCalculator.setNumDaysForRule(0);
@@ -127,7 +127,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndNoRMB() {
-        long expected = -2L; // TODO calculate this value
+        long expected = 552357L; // TODO calculate this value
         account.setBalance(500000L); // $5000.00
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
