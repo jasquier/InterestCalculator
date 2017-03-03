@@ -1,24 +1,14 @@
 package team.squad;
 
 /**
- * Created by johnsquier on 3/2/17.
+ * @author John A. Squier
  */
-public class Transaction {
+public abstract class Transaction {
 
-    String date;
-    long amount;
+    private Long amount;
 
-    public Transaction(String date, long amount) {
-        this.date = date;
+    public Transaction(Long amount) {
         this.amount = amount;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
     }
 
     public long getAmount() {
