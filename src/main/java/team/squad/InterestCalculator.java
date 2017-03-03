@@ -67,8 +67,7 @@ public class InterestCalculator {
     public void calculateComplexInterest() {
 
         //A = P (1 + r/n) (nt)
-
-        interestAmount = (long) Math.pow(account.getBalance()*((1 + (account.getInterestRate()/frequency))), frequency*interval) - account.getBalance();
+        interestAmount = (long) (account.getBalance() *(Math.pow(1+(account.getInterestRate()/frequency), frequency*(interval/365)) - 1));
     }
 
     protected boolean isUnderRMB(){

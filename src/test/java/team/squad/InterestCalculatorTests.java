@@ -20,7 +20,7 @@ public class InterestCalculatorTests {
     public void setup() {
         account = new Account();
         account.setAccountType("savings");
-        account.setInterestRate(0.10); // 10% APY
+        account.setInterestRate(.10); // 10% APY in Interest Rate Monthly
         account.setOverDraftPenalty(0L); // when under $0.00 no interest
         account.setRecurringTransactions(null);
         account.setAccountHistory(null);
@@ -126,7 +126,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndNoRMB() {
-        long expected = 552357L; // TODO calculate this value
+        long expected = 52357L; // TODO calculate this value
         account.setBalance(500000L); // $5000.00
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
