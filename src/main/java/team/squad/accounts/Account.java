@@ -1,8 +1,9 @@
 package team.squad.accounts;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.List;
 
 /**
@@ -18,9 +19,15 @@ import java.util.List;
  * "Account object with balance ✓ & interest rate ✓ properties, TRANSACTION HISTORY (is this ledger balance?),
  *      overdraft ✓ & minimum balance info ✓ & a list of recurring transactions ✓"
  */
+// this isn't right
+@JsonIgnoreProperties(value = {"balance", "ledgerBalance", "accountType",
+                                "interestRate", "overDraftPenalty", "requiredMinimumBalance",
+                                "isMinimumBalanceRequired", "recurringTransactions",
+                                "accountHistory"}, allowSetters = true)
 public class Account {
 
     private Integer ID;
+    private static Integer nextID = 1;
     private Long balance; // in pennies
     private Long ledgerBalance;
     private String accountType; // does this even matter?
@@ -31,57 +38,54 @@ public class Account {
     private List<RecurringTransaction> recurringTransactions;
     private List<PastTransaction> accountHistory;
 
-    public Account() { }
+    public Account() {
+        ID = nextID++;
+    }
 
-    public Integer getID() { return 27; }
+    public Integer getID() {
+        return ID;
+    }
 
-    @JsonIgnore
     public Long getBalance() {
+        System.out.println("in get balance");
         return balance;
     }
 
-    @JsonIgnore
     public Long getLedgerBalance() {
         return ledgerBalance;
     }
 
-    @JsonIgnore
     public String getAccountType() {
         return accountType;
     }
 
-    @JsonIgnore
     public Double getInterestRate() {
         return interestRate;
     }
 
-    @JsonIgnore
     public Long getOverDraftPenalty() {
         return overDraftPenalty;
     }
 
-    @JsonIgnore
     public Long getRequiredMinimumBalance() {
         return requiredMinimumBalance;
     }
 
-    @JsonIgnore
     public Boolean getIsMinimumBalanceRequired() {
         return isMinimumBalanceRequired;
     }
 
-    @JsonIgnore
     public List<RecurringTransaction> getRecurringTransactions() {
         return recurringTransactions;
     }
 
-    @JsonIgnore
     public List<PastTransaction> getAccountHistory() {
         return accountHistory;
     }
 
     public void setBalance(Long balance) {
         this.balance = balance;
+        System.out.println(this.balance);
     }
 
     public void setAccountType(String accountType) {
@@ -131,19 +135,5 @@ public class Account {
             }
         }
         return adjustedAmount;
-    }
-
-    public static Account createBlankAccount() {
-        Account toReturn = new Account();
-        toReturn.setBalance(0L);
-        toReturn.setAccountType("savings");
-        toReturn.setInterestRate(0.0);
-        toReturn.setOverDraftPenalty(0L);
-        toReturn.setRequiredMinimumBalance(0L);
-        toReturn.setIsMinimumBalanceRequired(false);
-        toReturn.setRecurringTransactions(new ArrayList<>());
-        toReturn.setAccountHistory(new ArrayList<>());
-
-        return toReturn;
     }
 }
