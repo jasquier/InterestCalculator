@@ -3,6 +3,11 @@ package team.squad.spring;
 import org.springframework.web.bind.annotation.*;
 import team.squad.accounts.Account;
 import team.squad.builders.AccountBuilder;
+import team.squad.interest.CalculationRule;
+import team.squad.interest.InterestCalculator;
+import team.squad.interest.InterestType;
+
+import java.util.Map;
 
 /**
  * @author John A. Squier
@@ -26,11 +31,11 @@ public class Controller {
 //
 //    }
 
-    // Calculate interest GET
-//    @CrossOrigin
-//    @RequestMapping(value = "/interestCalculator", method = RequestMethod.GET, consumes = {"application/json"})
-//    public @ResponseBody InterestCalculator getInterestAmount(String ID, Integer interval, Integer frequency,
-//                                                              Long interestAmount, InterestType interestType,CalculationRule rule, Integer numDaysForRule) {
-//        return InterestCalculatorBuilder.;
-//    }
+    // Calculate interest POST
+    @CrossOrigin
+    @RequestMapping(value = "/interestCalculator", method = RequestMethod.POST, consumes = {"application/json"})
+    public @ResponseBody
+    InterestCalculator getInterestAmount(@RequestBody InterestCalculator interestCalculator) {
+        return interestCalculator;
+    }
 }

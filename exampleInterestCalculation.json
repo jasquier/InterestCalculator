@@ -1,0 +1,8 @@
+{
+  "accountID": 27,
+  "interval": 365,
+  "frequency": 12,
+  "interestType": "SIMPLE",
+  "calculationRule": "NONE",
+  "numDaysForRule": 0
+}
