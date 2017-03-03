@@ -126,7 +126,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndNoRMB() {
-        long expected = 52357L; // TODO calculate this value
+        long expected = 52356L; // TODO calculate this value
         account.setBalance(500000L); // $5000.00
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
