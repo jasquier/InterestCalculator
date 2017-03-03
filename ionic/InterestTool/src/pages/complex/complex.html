@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      KQND Bank - Complex Interest Calculator
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-menu side="right" [content]="mycontent">...</ion-menu>
+
+<ion-content padding>
+  <ion-list>
+
+   <ion-item>
+    <ion-label color="primary">Account Type</ion-label>
+    <ion-select placeholder="Checking">
+      <ion-option value="checking">Checking</ion-option>
+      <ion-option value="savings">Savings</ion-option>
+      <ion-option value="loan">Loan</ion-option>
+      <ion-option value="moneyMarket">Money Market</ion-option>
+      <ion-option value="certificateOfDeposit">Certificate of Deposit</ion-option>
+    </ion-select>
+   </ion-item>
+
+  <ion-item>
+    <ion-label color="primary">Balance</ion-label>
+    <ion-input placeholder="500"></ion-input>
+  </ion-item>
+
+    <ion-item>
+    <ion-label color="primary">Interest Rate</ion-label>
+    <ion-input placeholder="0.08"></ion-input>
+   </ion-item>
+
+    <ion-item>
+    <ion-label color="primary">Overdraft Penalty</ion-label>
+    <ion-input placeholder="25"></ion-input>
+   </ion-item>
+
+  <ion-item>
+    <ion-label color="primary">Interval</ion-label>
+    <ion-input placeholder="365"></ion-input>
+   </ion-item>
+
+    </ion-list>
+    <ion-list>
+
+    <ion-item>
+    <ion-label color="primary">Is a minimum balance required?</ion-label>
+    <ion-toggle [(ngModel)]="minBalanceRequired"></ion-toggle>
+    </ion-item>
+
+    <ion-item *ngIf="minBalanceRequired">
+    <ion-label color="primary">Minimum balance</ion-label>
+    <ion-input placeholder="1000"></ion-input>
+    </ion-item>
+
+    </ion-list>
+     <ion-list>
+
+    <ion-item>
+    <ion-label color="primary">Are there recurring payments?</ion-label>
+    <ion-toggle [(ngModel)]="recurringPaymentsExist"></ion-toggle>
+    </ion-item>
+        
+    <ion-item *ngIf="recurringPaymentsExist">
+    <ion-label color="primary">Frequency</ion-label>
+    <ion-input placeholder="365"></ion-input>
+    </ion-item>
+    
+    <ion-item *ngIf="recurringPaymentsExist">
+    <ion-label color="primary">Amount</ion-label>
+    <ion-input placeholder="2000"></ion-input>
+    </ion-item>
+
+    </ion-list>
+     <ion-list>
+
+    <ion-item>
+    <ion-label color="primary"> Want to upload account history?</ion-label>
+    <ion-toggle [(ngModel)]="accountHistoryExists"></ion-toggle>
+    </ion-item>
+
+    <ion-item *ngIf="accountHistoryExists">
+    <ion-label color="primary">Amount</ion-label>
+    <ion-input placeholder="2000"></ion-input>
+    </ion-item>
+
+   <ion-item *ngIf="accountHistoryExists">
+   <ion-label color="primary">Date</ion-label>
+   <ion-datetime displayFormat="MM/DD/YYYY" placeholder="11/19/1993"></ion-datetime>
+   </ion-item>
+
+    </ion-list>
+
+    <button ion-button color="blue">Submit</button>
+
+</ion-content>
