@@ -6,24 +6,24 @@ package team.squad;
  *
  * TODO figure out if getters are needed or not
  */
-public class RecurringTransaction {
+public class RecurringTransaction extends Transaction {
 
-    private Long amount;
-    private Interval frequency;
+    private Integer frequency;
 
-    public Long getAmount() {
-        return amount;
+    public RecurringTransaction() {
+        this.frequency = 12;
     }
 
-    public Interval getFrequency() {
+    public RecurringTransaction(Long amount, Integer frequency) {
+        super(amount);
+        this.frequency = frequency;
+    }
+
+    public Integer getFrequency() {
         return frequency;
     }
 
-    public void setAmount(Long amount) {
-        this.amount = amount;
-    }
-
-    public void setFrequency(Interval frequency) {
+    public void setFrequency(Integer frequency) {
         this.frequency = frequency;
     }
 }
