@@ -31,6 +31,8 @@ export class InterestService {
             "calculationRule": calculationRule,
             "numDaysForRule": numDaysForRule
         };
+
+        console.log("hi John");
         
         this.http.post(this.url, this.data).subscribe(response => {
             this.responseData = response.json();
