@@ -288,4 +288,36 @@ public class InterestCalculatorTests {
 
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void calcSimpleInterestNonZeroBalanceAndBelowRMBWithCreditsThatDoBringBalanceAboveRMB() {
+        long expected = -2L;
+        account.setBalance(900000L); // $9000.00
+        account.setIsMinimumBalanceRequired(true);
+        account.setRequiredMinimumBalance(1000000L); // $10,000
+        RecurringTransaction credit500DollarsPerMonth = new RecurringTransaction(50000L, 12);
+        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
+        recurringTransactions.add(credit500DollarsPerMonth);
+        account.setRecurringTransactions(recurringTransactions);
+
+        long actual = simpleInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestNonZeroBalanceAndBelowRMBWithCreditsThatDoNotBringBalanceAboveRMB() {
+        long expected = -2L;
+        account.setBalance(100L);
+        account.setIsMinimumBalanceRequired(true);
+        account.setRequiredMinimumBalance(1000000L);
+        RecurringTransaction credit1DollarPerMonth = new RecurringTransaction(100L, 12);
+        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
+        recurringTransactions.add(credit1DollarPerMonth);
+        account.setRecurringTransactions(recurringTransactions);
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
 }
