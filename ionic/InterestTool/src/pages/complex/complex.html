@@ -42,6 +42,11 @@
     <ion-input placeholder="365"></ion-input>
    </ion-item>
 
+     <ion-item>
+    <ion-label color="primary">Frequency</ion-label>
+    <ion-input placeholder="30"></ion-input>
+   </ion-item>
+
     </ion-list>
     <ion-list>
 
@@ -80,6 +85,25 @@
     <ion-label color="primary"> Want to upload account history?</ion-label>
     <ion-toggle [(ngModel)]="accountHistoryExists"></ion-toggle>
     </ion-item>
+
+       <ion-item>
+    <ion-label *ngIf="accountHistoryExists" color="primary">What balance calculation rule should be applied?</ion-label>
+    <ion-select [(ngModel)]="method" *ngIf="accountHistoryExists" placeholder="Time of credit">
+      <ion-option value="timeOfCredit">Time of credit</ion-option>
+      <ion-option value="exInterestDate">Ex-interest date</ion-option>
+      <ion-option value="average">Average</ion-option>
+      <ion-option value="maxBalance">Maximum balance</ion-option>
+      <ion-option value="minBalance">Minimum balance</ion-option>
+      <ion-option value="thresholdMax">Threshold maximum</ion-option>
+      <ion-option value="thresholdMin">Threshold minimum</ion-option>
+    </ion-select>
+   </ion-item>
+
+      <ion-item *ngIf="thresholdMax">
+    <ion-label color="primary">How many days?</ion-label>
+    <ion-input placeholder="4"></ion-input>
+    </ion-item>
+
 
     <ion-item *ngIf="accountHistoryExists">
     <ion-label color="primary">Amount</ion-label>
