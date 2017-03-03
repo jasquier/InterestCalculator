@@ -21,30 +21,16 @@ public class InterestCalculator {
     private Long interestAmount;
     private InterestType interestType;
     private CalculationRule calculationRule;
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public Integer getInterval() {
-        return interval;
-    }
+    private Integer numDaysForRule;
 
     public Long getInterestAmount() {
-        interestAmount = 1337L;
+        if ( interestType.equals(InterestType.SIMPLE) ) {
+            calculateSimpleInterest();
+        }
+        else {
+            calculateComplexInterest();
+        }
         return interestAmount;
-    }
-
-    public Integer getFrequency() {
-        return frequency;
-    }
-
-    public InterestType getInterestType() {
-        return interestType;
-    }
-
-    public CalculationRule getCalculationRule() {
-        return calculationRule;
     }
 
     public void setAccount(Account account) {
@@ -67,11 +53,49 @@ public class InterestCalculator {
         this.calculationRule = calculationRule;
     }
 
-    public long calculateSimpleInterest() {
-        return -1;
+    public void setNumDaysForRule(Integer numDaysForRule) {
+        this.numDaysForRule = numDaysForRule;
     }
 
-    public long calculateComplexInterest() {
-        return -1;
+    public void calculateSimpleInterest() {
+        if(!isUnderRMB())
+            interestAmount = (long) (account.getBalance()*account.getInterestRate()*(interval/365));
+        else
+            interestAmount = 0L;
     }
+
+    public void calculateComplexInterest() {
+        interestAmount = -1L;
+    }
+
+    protected boolean isUnderRMB(){
+        return (account.getBalance() <= account.getRequiredMinimumBalance());
+    }
+
+    protected double setRMBinterest() {
+        return (isUnderRMB()) ? 0.00 : account.getInterestRate();
+    }
+
+    protected boolean isThereAccountHistory(){
+        return this.account.getAccountHistory() != null;
+    }
+
+    protected boolean isThereRecurringTransactions(){
+        return this.account.getRecurringTransactions() != null;
+    }
+
+    public boolean calculateBalancesInOrder(){
+        return isThereAccountHistory() || isThereRecurringTransactions();
+    }
+
+    protected boolean isOverDrawn(){
+        return account.getBalance() < 0;
+    }
+
+    protected long setOverDraftPenalty(){
+        return (isOverDrawn()) ? account.getOverDraftPenalty() : 0;
+    }
+
+
+
 }

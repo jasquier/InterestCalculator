@@ -6,10 +6,12 @@
     "overDraftPenalty": 0,
     "requiredMinimumBalance": 0,
     "isMinimumBalanceRequired": true,
-    "recurringTransactions": null
+    "recurringTransactions": null,
+    "accountHistory": null
   },
-  "interval": 0,
+  "interval": 120,
   "frequency": 1,
   "interestType": 0,
-  "calculationRule": 0
+  "calculationRule": 0,
+  "numDaysForRule": 10
 }
