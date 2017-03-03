@@ -64,7 +64,7 @@ public class InterestCalculator {
     public void calculateComplexInterest() {
         //A = P (1 + r/n) (nt)
         long initialPrinciple = account.getBalance();
-        double rate = account.getInterestRate()/frequency;
+        double rate = setRMBInterest();
         double compoundedOverYears = frequency * (interval/365);
         interestAmount = (long) (initialPrinciple * (Math.pow(1+ rate, compoundedOverYears) - 1));
     }

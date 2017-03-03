@@ -138,7 +138,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndAboveRMB() {
-        long expected = -2L; // TODO calculate this value
+        long expected = 52356; // TODO calculate this value
         account.setBalance(500000L); // $5000.00
         account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(10000L);
@@ -150,7 +150,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndBelowRMB() {
-        long expected = -2L;
+        long expected = 0L;
         account.setBalance(10000L); // $100.00
         account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(50000L); // $500.00
@@ -162,7 +162,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithZeroBalanceAndNoRMB() {
-        long expected = -2L;
+        long expected = 0L;
         account.setBalance(0L);
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
@@ -174,7 +174,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithZeroBalanceBelowRMB() {
-        long expected = -2L;
+        long expected = 0L;
         account.setBalance(1000L);
         account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(10000L);
