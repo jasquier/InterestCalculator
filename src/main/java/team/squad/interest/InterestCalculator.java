@@ -1,6 +1,7 @@
 package team.squad.interest;
 
 import team.squad.accounts.Account;
+import team.squad.accounts.AccountStore;
 
 /**
  * @author John A. Squier
@@ -26,11 +27,11 @@ public class InterestCalculator {
     private CalculationRule calculationRule;
     private Integer numDaysForRule;
 
-    public InterestCalculator() {
-        System.out.println("InterestCalculator constructor");
-    }
+    public InterestCalculator() { }
 
     public Long getInterestAmount() {
+        System.out.println("ID = " + account.getID());
+
         if ( interestType.equals(InterestType.SIMPLE) ) {
             calculateSimpleInterest();
         }
@@ -45,28 +46,35 @@ public class InterestCalculator {
     }
 
     public void setAccountID(Integer accountID) {
+        System.out.println("setting accountID = " + accountID);
         this.accountID = accountID;
-        // this needs to find the account from the number
-        this.account = Account.createBlankAccount();
+        System.out.println("setting account by ID = " + this.accountID);
+        this.account = AccountStore.getAccountByID(accountID);
+        System.out.println("account balance = " + account.getBalance());
     }
 
     public void setInterval(Integer interval) {
+        System.out.println("setting interval = " + interval);
         this.interval = interval;
     }
 
     public void setFrequency(Integer frequency) {
+        System.out.println("setting frequency = " + frequency);
         this.frequency = frequency;
     }
 
     public void setInterestType(InterestType interestType) {
+        System.out.println("setting interest type = " + interestType);
         this.interestType = interestType;
     }
 
     public void setCalculationRule(CalculationRule calculationRule) {
+        System.out.println("setting rule = " + calculationRule);
         this.calculationRule = calculationRule;
     }
 
     public void setNumDaysForRule(Integer numDaysForRule) {
+        System.out.println("setting numDaysForRule = " + numDaysForRule);
         this.numDaysForRule = numDaysForRule;
     }
 
