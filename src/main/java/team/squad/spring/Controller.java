@@ -7,6 +7,8 @@ import team.squad.interest.CalculationRule;
 import team.squad.interest.InterestCalculator;
 import team.squad.interest.InterestType;
 
+import java.util.Map;
+
 /**
  * @author John A. Squier
  * add your name when you work on this file
@@ -29,11 +31,11 @@ public class Controller {
 //
 //    }
 
-    // Calculate interest GET
+    // Calculate interest POST
     @CrossOrigin
     @RequestMapping(value = "/interestCalculator", method = RequestMethod.POST, consumes = {"application/json"})
     public @ResponseBody
-    Long getInterestAmount(InterestCalculator interestCalculator) {
-        return interestCalculator.getInterestAmount();
+    InterestCalculator getInterestAmount(@RequestBody InterestCalculator interestCalculator) {
+        return interestCalculator;
     }
 }

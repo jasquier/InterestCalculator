@@ -1,7 +1,8 @@
 package team.squad.accounts;
 
-import team.squad.builders.AccountBuilder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class Account {
 
-    private String ID;
+    private Integer ID;
     private Long balance; // in pennies
     private Long ledgerBalance;
     private String accountType; // does this even matter?
@@ -31,59 +32,56 @@ public class Account {
     private List<PastTransaction> accountHistory;
 
     public Account() { }
-//
-//
-//    public static Account getAccountInfoByID(String ID) {
-//        // this will hit the database at some point
-//        // this is most definitely wrong
-//        return new Account();
-//    }
 
-    public String getID() { return "27"; }
+    public Integer getID() { return 27; }
 
+    @JsonIgnore
     public Long getBalance() {
         return balance;
     }
 
+    @JsonIgnore
     public Long getLedgerBalance() {
         return ledgerBalance;
     }
 
+    @JsonIgnore
     public String getAccountType() {
         return accountType;
     }
 
+    @JsonIgnore
     public Double getInterestRate() {
         return interestRate;
     }
 
+    @JsonIgnore
     public Long getOverDraftPenalty() {
         return overDraftPenalty;
     }
 
+    @JsonIgnore
     public Long getRequiredMinimumBalance() {
         return requiredMinimumBalance;
     }
 
+    @JsonIgnore
     public Boolean getIsMinimumBalanceRequired() {
         return isMinimumBalanceRequired;
     }
 
+    @JsonIgnore
     public List<RecurringTransaction> getRecurringTransactions() {
         return recurringTransactions;
     }
 
+    @JsonIgnore
     public List<PastTransaction> getAccountHistory() {
         return accountHistory;
     }
 
     public void setBalance(Long balance) {
-        if ( this.balance == null ) {
-            this.balance = 0L;
-        }
-        else {
-            this.balance = balance;
-        }
+        this.balance = balance;
     }
 
     public void setAccountType(String accountType) {
@@ -116,7 +114,6 @@ public class Account {
 
     public void calculateLedgerBalance(Integer interval) {
         ledgerBalance = balance + getAdjustedBalance(interval);
-        return;
     }
 
     private Long getAdjustedBalance(Integer interval) {
@@ -136,5 +133,17 @@ public class Account {
         return adjustedAmount;
     }
 
+    public static Account createBlankAccount() {
+        Account toReturn = new Account();
+        toReturn.setBalance(0L);
+        toReturn.setAccountType("savings");
+        toReturn.setInterestRate(0.0);
+        toReturn.setOverDraftPenalty(0L);
+        toReturn.setRequiredMinimumBalance(0L);
+        toReturn.setIsMinimumBalanceRequired(false);
+        toReturn.setRecurringTransactions(new ArrayList<>());
+        toReturn.setAccountHistory(new ArrayList<>());
 
+        return toReturn;
+    }
 }

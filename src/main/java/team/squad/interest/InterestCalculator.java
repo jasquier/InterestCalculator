@@ -18,14 +18,17 @@ import team.squad.accounts.Account;
 public class InterestCalculator {
 
     private Account account; // get acct number perhaps and hit the backend
+    private Integer accountID;
     private Integer interval;   // in days
-    private Integer frequency; // a.k.a compounding period in days
+    private Integer frequency; // a.k.a num times per year we compound
     private Long interestAmount;
     private InterestType interestType;
     private CalculationRule calculationRule;
     private Integer numDaysForRule;
 
-    public InterestCalculator() { }
+    public InterestCalculator() {
+        System.out.println("InterestCalculator constructor");
+    }
 
     public Long getInterestAmount() {
         if ( interestType.equals(InterestType.SIMPLE) ) {
@@ -39,6 +42,12 @@ public class InterestCalculator {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public void setAccountID(Integer accountID) {
+        this.accountID = accountID;
+        // this needs to find the account from the number
+        this.account = Account.createBlankAccount();
     }
 
     public void setInterval(Integer interval) {
