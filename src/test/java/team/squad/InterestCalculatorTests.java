@@ -3,7 +3,6 @@ package team.squad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.context.TestExecutionListeners;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +126,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndNoRMB() {
-        long expected = -2L; // TODO calculate this value
+        long expected = 552357L; // TODO calculate this value
         account.setBalance(500000L); // $5000.00
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
