@@ -83,14 +83,14 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcSimpleInterestWithZeroBalanceAndNoRMB() {
-        long expected = 0L;
+        long expected2 = 0L;
         account.setBalance(0L); // $0.00
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
 
         long actual = simpleInterestCalculator.getInterestAmount();
 
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(expected2, actual);
     }
 
     @Test
