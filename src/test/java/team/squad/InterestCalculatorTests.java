@@ -3,6 +3,11 @@ package team.squad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import team.squad.accounts.Account;
+import team.squad.accounts.RecurringTransaction;
+import team.squad.interest.CalculationRule;
+import team.squad.interest.InterestCalculator;
+import team.squad.interest.InterestType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,14 +83,14 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcSimpleInterestWithZeroBalanceAndNoRMB() {
-        long expected = 0L;
+        long expected2 = 0L;
         account.setBalance(0L); // $0.00
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
 
         long actual = simpleInterestCalculator.getInterestAmount();
 
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(expected2, actual);
     }
 
     @Test
@@ -138,7 +143,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndAboveRMB() {
-        long expected = -2L; // TODO calculate this value
+        long expected = 52356; // TODO calculate this value
         account.setBalance(500000L); // $5000.00
         account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(10000L);
@@ -150,7 +155,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndBelowRMB() {
-        long expected = -2L;
+        long expected = 0L;
         account.setBalance(10000L); // $100.00
         account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(50000L); // $500.00
@@ -162,7 +167,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithZeroBalanceAndNoRMB() {
-        long expected = -2L;
+        long expected = 0L;
         account.setBalance(0L);
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
@@ -174,7 +179,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithZeroBalanceBelowRMB() {
-        long expected = -2L;
+        long expected = 0L;
         account.setBalance(1000L);
         account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(10000L);
@@ -186,7 +191,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestNegativeBalanceNoRMB() {
-        long expected = -2L;
+        long expected = 0L;
         account.setBalance(-1000L);
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
@@ -198,7 +203,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestNegativeBalanceWithRMB() {
-        long expected = -2L;
+        long expected = 0L;
         account.setBalance(-1000L);
         account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(50000L);
@@ -313,6 +318,22 @@ public class InterestCalculatorTests {
         RecurringTransaction credit1DollarPerMonth = new RecurringTransaction(100L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
         recurringTransactions.add(credit1DollarPerMonth);
+        account.setRecurringTransactions(recurringTransactions);
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestNonZeroBalanceAndBelowRMBWithCreditsThatDoBringBalanceAboveRMB() {
+        long expected = -2L;
+        account.setBalance(950000L);
+        account.setIsMinimumBalanceRequired(true);
+        account.setRequiredMinimumBalance(1000000L);
+        RecurringTransaction credit200DollarsPerMonth = new RecurringTransaction(20000L, 12);
+        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
+        recurringTransactions.add(credit200DollarsPerMonth);
         account.setRecurringTransactions(recurringTransactions);
 
         long actual = complexInterestCalculator.getInterestAmount();

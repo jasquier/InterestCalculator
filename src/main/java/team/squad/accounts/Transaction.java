@@ -1,4 +1,4 @@
-package team.squad;
+package team.squad.accounts;
 
 /**
  * @author John A. Squier

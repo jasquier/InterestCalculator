@@ -1,9 +1,15 @@
-package team.squad;
+package team.squad.accounts;
 
+<<<<<<< HEAD:src/main/java/team/squad/Account.java
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+=======
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
+>>>>>>> working:src/main/java/team/squad/accounts/Account.java
 import java.util.List;
 
 /**
@@ -22,10 +28,14 @@ import java.util.List;
 @Entity
 public class Account {
 
+<<<<<<< HEAD:src/main/java/team/squad/Account.java
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
     private Long id;
     private Long accountNumber;
+=======
+    private Integer ID;
+>>>>>>> working:src/main/java/team/squad/accounts/Account.java
     private Long balance; // in pennies
     private Long ledgerBalance;
     private String accountType; // does this even matter?
@@ -36,6 +46,7 @@ public class Account {
     private List<RecurringTransaction> recurringTransactions;
     private List<PastTransaction> accountHistory;
 
+<<<<<<< HEAD:src/main/java/team/squad/Account.java
     public Long getAccountNumber() {
         return accountNumber;
     }
@@ -44,38 +55,53 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
+=======
+    public Account() { }
+
+    public Integer getID() { return 27; }
+
+    @JsonIgnore
+>>>>>>> working:src/main/java/team/squad/accounts/Account.java
     public Long getBalance() {
         return balance;
     }
 
+    @JsonIgnore
     public Long getLedgerBalance() {
         return ledgerBalance;
     }
 
+    @JsonIgnore
     public String getAccountType() {
         return accountType;
     }
 
+    @JsonIgnore
     public Double getInterestRate() {
         return interestRate;
     }
 
+    @JsonIgnore
     public Long getOverDraftPenalty() {
         return overDraftPenalty;
     }
 
+    @JsonIgnore
     public Long getRequiredMinimumBalance() {
         return requiredMinimumBalance;
     }
 
+    @JsonIgnore
     public Boolean getIsMinimumBalanceRequired() {
         return isMinimumBalanceRequired;
     }
 
+    @JsonIgnore
     public List<RecurringTransaction> getRecurringTransactions() {
         return recurringTransactions;
     }
 
+    @JsonIgnore
     public List<PastTransaction> getAccountHistory() {
         return accountHistory;
     }
@@ -114,25 +140,36 @@ public class Account {
 
     public void calculateLedgerBalance(Integer interval) {
         ledgerBalance = balance + getAdjustedBalance(interval);
-        return;
     }
 
     private Long getAdjustedBalance(Integer interval) {
         Long adjustedAmount = 0L;
 
         for ( RecurringTransaction r : recurringTransactions ) {
-            if ( r.getFrequency().equals(Interval.DAILY) ) {
+            if ( r.getFrequency().equals(365) ) {
                 adjustedAmount += r.getAmount() * interval;
             }
-            else if ( r.getFrequency().equals(Interval.MONTHLY) ) {
+            else if ( r.getFrequency().equals(12) ) {
                 adjustedAmount += r.getAmount() * (interval / 30);
             }
-            else if ( r.getFrequency().equals(Interval.ANNUALLY) ) {
+            else if ( r.getFrequency().equals(1) ) {
                 adjustedAmount += r.getAmount() * (interval / 365);
             }
         }
         return adjustedAmount;
     }
 
+    public static Account createBlankAccount() {
+        Account toReturn = new Account();
+        toReturn.setBalance(0L);
+        toReturn.setAccountType("savings");
+        toReturn.setInterestRate(0.0);
+        toReturn.setOverDraftPenalty(0L);
+        toReturn.setRequiredMinimumBalance(0L);
+        toReturn.setIsMinimumBalanceRequired(false);
+        toReturn.setRecurringTransactions(new ArrayList<>());
+        toReturn.setAccountHistory(new ArrayList<>());
 
+        return toReturn;
+    }
 }

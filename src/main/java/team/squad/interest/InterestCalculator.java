@@ -1,4 +1,6 @@
-package team.squad;
+package team.squad.interest;
+
+import team.squad.accounts.Account;
 
 /**
  * @author John A. Squier
@@ -16,12 +18,17 @@ package team.squad;
 public class InterestCalculator {
 
     private Account account; // get acct number perhaps and hit the backend
+    private Integer accountID;
     private Integer interval;   // in days
-    private Integer frequency; // a.k.a compounding period in days
+    private Integer frequency; // a.k.a num times per year we compound
     private Long interestAmount;
     private InterestType interestType;
     private CalculationRule calculationRule;
     private Integer numDaysForRule;
+
+    public InterestCalculator() {
+        System.out.println("InterestCalculator constructor");
+    }
 
     public Long getInterestAmount() {
         if ( interestType.equals(InterestType.SIMPLE) ) {
@@ -35,6 +42,12 @@ public class InterestCalculator {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public void setAccountID(Integer accountID) {
+        this.accountID = accountID;
+        // this needs to find the account from the number
+        this.account = Account.createBlankAccount();
     }
 
     public void setInterval(Integer interval) {
@@ -58,23 +71,25 @@ public class InterestCalculator {
     }
 
     public void calculateSimpleInterest() {
-        if(!isUnderRMB())
-            interestAmount = (long) (account.getBalance()*account.getInterestRate()*(interval/365));
+        if( canEarnInterest())
+            interestAmount = (long) (account.getBalance()*getRMBInterest()*(interval/365));
         else
             interestAmount = 0L;
     }
 
     public void calculateComplexInterest() {
-
         //A = P (1 + r/n) (nt)
-        interestAmount = (long) (account.getBalance() *(Math.pow(1+(account.getInterestRate()/frequency), frequency*(interval/365)) - 1));
+        long initialPrinciple = account.getBalance() - getOverDraftPenalty();
+        double rate = getInterestRate()/frequency;
+        double compoundedOverYears = frequency * (interval/365);
+        interestAmount = (long) (initialPrinciple * (Math.pow(1+ rate, compoundedOverYears) - 1));
     }
 
     protected boolean isUnderRMB(){
-        return (account.getBalance() <= account.getRequiredMinimumBalance());
+        return (account.getBalance() <= account.getRequiredMinimumBalance() && account.getIsMinimumBalanceRequired());
     }
 
-    protected double setRMBinterest() {
+    protected double getRMBInterest() {
         return (isUnderRMB()) ? 0.00 : account.getInterestRate();
     }
 
@@ -94,10 +109,27 @@ public class InterestCalculator {
         return account.getBalance() < 0;
     }
 
-    protected long setOverDraftPenalty(){
+    protected long getOverDraftPenalty(){
         return (isOverDrawn()) ? account.getOverDraftPenalty() : 0;
     }
 
+    private double getInterestRate() {
+        double rate;
+        if (canEarnInterest())
+            return account.getInterestRate();
+        else if (isOverDrawn())
+            return 0.00;
+        else
+            return getRMBInterest();
+
+    }
+    private boolean canEarnInterest(){
+        return !isUnderRMB() &&  isPositiveBalance();
+    }
+
+    private boolean isPositiveBalance() {
+        return account.getBalance() > 0;
+    }
 
 
 }
