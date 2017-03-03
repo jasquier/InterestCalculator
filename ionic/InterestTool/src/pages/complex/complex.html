@@ -6,7 +6,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-menu side="right" [content]="mycontent">...</ion-menu>
+
 
 <ion-content padding>
   <ion-list>
@@ -117,6 +117,6 @@
 
     </ion-list>
 
-    <button ion-button color="blue">Submit</button>
+    <button ion-button color="blue" (click)="callInterestService()">Submit</button>
 
 </ion-content>
