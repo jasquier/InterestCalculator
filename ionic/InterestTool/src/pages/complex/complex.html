@@ -99,12 +99,6 @@
     </ion-select>
    </ion-item>
 
-      <ion-item *ngIf="thresholdMax">
-    <ion-label color="primary">How many days?</ion-label>
-    <ion-input placeholder="4"></ion-input>
-    </ion-item>
-
-
     <ion-item *ngIf="accountHistoryExists">
     <ion-label color="primary">Amount</ion-label>
     <ion-input placeholder="2000"></ion-input>
@@ -114,6 +108,12 @@
    <ion-label color="primary">Date</ion-label>
    <ion-datetime displayFormat="MM/DD/YYYY" placeholder="11/19/1993"></ion-datetime>
    </ion-item>
+
+    <ion-item *ngIf="method === 'thresholdMax' || method === 'thresholdMin'">
+    <ion-label color="primary">How many days?</ion-label>
+    <ion-input placeholder="4"></ion-input>
+    </ion-item>
+
 
     </ion-list>
 
