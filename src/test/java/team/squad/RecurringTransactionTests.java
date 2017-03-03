@@ -1,6 +1,7 @@
 package team.squad;
 
 import org.junit.Before;
+import team.squad.accounts.RecurringTransaction;
 
 /**
  * @author John A. Squier

@@ -3,6 +3,11 @@ package team.squad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import team.squad.accounts.Account;
+import team.squad.accounts.RecurringTransaction;
+import team.squad.interest.CalculationRule;
+import team.squad.interest.InterestCalculator;
+import team.squad.interest.InterestType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -313,6 +318,22 @@ public class InterestCalculatorTests {
         RecurringTransaction credit1DollarPerMonth = new RecurringTransaction(100L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
         recurringTransactions.add(credit1DollarPerMonth);
+        account.setRecurringTransactions(recurringTransactions);
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestNonZeroBalanceAndBelowRMBWithCreditsThatDoBringBalanceAboveRMB() {
+        long expected = -2L;
+        account.setBalance(950000L);
+        account.setIsMinimumBalanceRequired(true);
+        account.setRequiredMinimumBalance(1000000L);
+        RecurringTransaction credit200DollarsPerMonth = new RecurringTransaction(20000L, 12);
+        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
+        recurringTransactions.add(credit200DollarsPerMonth);
         account.setRecurringTransactions(recurringTransactions);
 
         long actual = complexInterestCalculator.getInterestAmount();
