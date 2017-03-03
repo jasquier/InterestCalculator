@@ -36,7 +36,7 @@
    </ion-item>
 
   <ion-item>
-    <ion-label color="primary">Interval</ion-label>
+    <ion-label color="primary">Calculation period</ion-label>
     <ion-input placeholder="365"></ion-input>
    </ion-item>
 
@@ -49,7 +49,7 @@
     </ion-item>
 
     <ion-item *ngIf="minBalanceRequired">
-    <ion-label color="primary">Minimum balance</ion-label>
+    <ion-label color="primary">Minimum balance required</ion-label>
     <ion-input placeholder="1000"></ion-input>
     </ion-item>
 
@@ -62,12 +62,12 @@
     </ion-item>
         
     <ion-item *ngIf="recurringPaymentsExist">
-    <ion-label color="primary">Frequency</ion-label>
+    <ion-label color="primary">Payment frequency</ion-label>
     <ion-input placeholder="365"></ion-input>
     </ion-item>
     
     <ion-item *ngIf="recurringPaymentsExist">
-    <ion-label color="primary">Amount</ion-label>
+    <ion-label color="primary">Payment amount</ion-label>
     <ion-input placeholder="2000"></ion-input>
     </ion-item>
 
@@ -93,7 +93,7 @@
    </ion-item>
 
     <ion-item *ngIf="accountHistoryExists">
-    <ion-label color="primary">Amount</ion-label>
+    <ion-label color="primary">Interest amount</ion-label>
     <ion-input placeholder="2000"></ion-input>
     </ion-item>
 
