@@ -34,7 +34,7 @@ public class InterestCalculatorTests {
         complexInterestCalculator = new InterestCalculator();
         complexInterestCalculator.setAccount(account);
         complexInterestCalculator.setInterval(365);
-        complexInterestCalculator.setFrequency(30); // monthly
+        complexInterestCalculator.setFrequency(12); // monthly
         complexInterestCalculator.setInterestType(InterestType.COMPLEX);
         complexInterestCalculator.setCalculationRule(CalculationRule.NONE);
         complexInterestCalculator.setNumDaysForRule(0);
