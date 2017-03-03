@@ -8,18 +8,22 @@ package team.squad;
  */
 public class RecurringTransaction extends Transaction {
 
-    private Interval frequency;
+    private Integer frequency;
 
-    public RecurringTransaction(Long amount, Interval frequency) {
+    public RecurringTransaction() {
+        this.frequency = 12;
+    }
+
+    public RecurringTransaction(Long amount, Integer frequency) {
         super(amount);
         this.frequency = frequency;
     }
 
-    public Interval getFrequency() {
+    public Integer getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(Interval frequency) {
+    public void setFrequency(Integer frequency) {
         this.frequency = frequency;
     }
 }

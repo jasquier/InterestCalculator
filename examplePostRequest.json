@@ -1,17 +1,32 @@
 {
   "account": {
-    "balance": 10,
+    "balance": 10000,
     "accountType": "savings",
-    "interestRate": 0.55,
+    "interestRate": 0.10,
     "overDraftPenalty": 0,
     "requiredMinimumBalance": 0,
-    "isMinimumBalanceRequired": true,
-    "recurringTransactions": null,
-    "accountHistory": null
+    "isMinimumBalanceRequired": false,
+    "recurringTransactions": [
+      {
+        "amount":-100,
+        "frequency":12
+      },
+      {
+        "amount":100,
+        "frequency":12
+      }],
+    "accountHistory": [
+      {
+        "amount":100,
+        "dateOccurredOn": null
+      },
+      {
+        "amount":-500,
+        "dateOccurredOn": null
+      }]
   },
-  "interval": 120,
-  "frequency": 1,
-  "interestType": 0,
-  "calculationRule": 0,
-  "numDaysForRule": 10
+  "interval": 365,
+  "frequency": 0,
+  "interestType": "SIMPLE",
+  "calculationRule": "NONE"
 }

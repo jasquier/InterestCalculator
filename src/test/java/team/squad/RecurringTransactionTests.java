@@ -12,6 +12,6 @@ public class RecurringTransactionTests {
 
     @Before
     public void setup() {
-        recurringTransaction = new RecurringTransaction(500L, Interval.DAILY);
+        recurringTransaction = new RecurringTransaction(500L, 365);
     }
 }
