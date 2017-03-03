@@ -60,4 +60,27 @@ public class AccountTests {
         Assert.assertEquals("I expect the ledger balance to be 437500 cents or $4375.00",
                 expected, actual);
     }
+
+    @Test
+    public void getAverageBalanceTest(){
+        Account accountWithHistory2 = new Account();
+        accountWithHistory2.setBalance(100000L); //$1000.00
+        accountWithHistory2.setAccountType("savings");
+        accountWithHistory2.setInterestRate(0.10); // 10% APY
+        accountWithHistory2.setOverDraftPenalty(0L); // when under $0.00 no interest
+        accountWithHistory2.setRequiredMinimumBalance(50000L); //$500.00 no interest when this hits
+        accountWithHistory2.setIsMinimumBalanceRequired(true);
+
+        RecurringTransaction credit100DollarsPerMonth = new RecurringTransaction(10000L, 12);
+        RecurringTransaction debit50DollarsPerMonth = new RecurringTransaction(-5000L, 12);
+        List<RecurringTransaction> recurringTransactions2 =  new ArrayList<>();
+        recurringTransactions2.add(credit100DollarsPerMonth);
+        recurringTransactions2.add(debit50DollarsPerMonth);
+        accountWithHistory2.setRecurringTransactions(recurringTransactions2);
+
+        long expectedAvgBalance = 130000L;
+        long actualAvgBalance = accountWithHistory2.getAverageBalance();
+        System.out.println(actualAvgBalance);
+        Assert.assertEquals(expectedAvgBalance, actualAvgBalance);
+    }
 }

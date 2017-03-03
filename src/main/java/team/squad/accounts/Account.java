@@ -2,6 +2,7 @@ package team.squad.accounts;
 
 import team.squad.builders.AccountBuilder;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -138,15 +139,22 @@ public class Account {
         return adjustedAmount;
     }
 
-
-    public long AverageBalance(int days) {
+    /* This method loops over the list of recurring transactions and computes
+    the average balance of the account at each period.
+    The actual formula used is just ( t[start] + t[end] ) / 2
+    This is done for each recurring transaction in the list of recurring transactions . */
+    public long getAverageBalance() {
+        long[] netRecurringTransactions = new long[getRecurringTransactions().size()];
+        long localBalance = getBalance();
         long avgBalance = 0;
-        
+
         for(int j=0; j<recurringTransactions.size(); j++){
             for(int i=0; i<recurringTransactions.get(j).getFrequency(); i++){
-                avgBalance += recurringTransactions.get(j).getAmount();
+                netRecurringTransactions[j] += recurringTransactions.get(j).getAmount();
             }
+            avgBalance = (localBalance + localBalance + netRecurringTransactions[j] ) / 2;
+            localBalance = avgBalance;
         }
-        return 2L;
+        return avgBalance;
     }
 }
