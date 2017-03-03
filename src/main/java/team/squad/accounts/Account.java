@@ -139,4 +139,14 @@ public class Account {
     }
 
 
+    public long AverageBalance(int days) {
+        long avgBalance = 0;
+        
+        for(int j=0; j<recurringTransactions.size(); j++){
+            for(int i=0; i<recurringTransactions.get(j).getFrequency(); i++){
+                avgBalance += recurringTransactions.get(j).getAmount();
+            }
+        }
+        return 2L;
+    }
 }
