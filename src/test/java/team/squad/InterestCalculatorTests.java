@@ -127,7 +127,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndNoRMB() {
-        long expected = 552357L; // TODO calculate this value
+        long expected = 552357L;
         account.setBalance(500000L); // $5000.00
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
@@ -139,7 +139,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestWithNonZeroBalanceAndAboveRMB() {
-        long expected = -2L;
+        long expected = -2L; // TODO calculate this value
         account.setBalance(500000L); // $5000.00
         account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(10000L);
@@ -215,7 +215,7 @@ public class InterestCalculatorTests {
         account.setBalance(1000000L);
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
-        RecurringTransaction debit1DollarPerMonth = new RecurringTransaction(-100L, Interval.MONTHLY);
+        RecurringTransaction debit1DollarPerMonth = new RecurringTransaction(-100L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
         recurringTransactions.add(debit1DollarPerMonth);
         account.setRecurringTransactions(recurringTransactions);
@@ -231,7 +231,7 @@ public class InterestCalculatorTests {
         account.setBalance(1000000L);
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
-        RecurringTransaction debit100DollarsPerMonth = new RecurringTransaction(-10000L, Interval.MONTHLY);
+        RecurringTransaction debit100DollarsPerMonth = new RecurringTransaction(-10000L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
         recurringTransactions.add(debit100DollarsPerMonth);
         account.setRecurringTransactions(recurringTransactions);
@@ -247,7 +247,7 @@ public class InterestCalculatorTests {
         account.setBalance(1000000L);
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
-        RecurringTransaction debit1DollarPerMonth = new RecurringTransaction(-100L, Interval.MONTHLY);
+        RecurringTransaction debit1DollarPerMonth = new RecurringTransaction(-100L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
         recurringTransactions.add(debit1DollarPerMonth);
         account.setRecurringTransactions(recurringTransactions);
@@ -263,7 +263,7 @@ public class InterestCalculatorTests {
         account.setBalance(1000000L);
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
-        RecurringTransaction debit1000DollarsPerMonth = new RecurringTransaction(-100100L, Interval.MONTHLY);
+        RecurringTransaction debit1000DollarsPerMonth = new RecurringTransaction(-100100L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
         recurringTransactions.add(debit1000DollarsPerMonth);
         account.setRecurringTransactions(recurringTransactions);
@@ -279,7 +279,7 @@ public class InterestCalculatorTests {
         account.setBalance(100L);
         account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(1000000L);
-        RecurringTransaction credit1DollarPerMonth = new RecurringTransaction(100L, Interval.MONTHLY);
+        RecurringTransaction credit1DollarPerMonth = new RecurringTransaction(100L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
         recurringTransactions.add(credit1DollarPerMonth);
         account.setRecurringTransactions(recurringTransactions);

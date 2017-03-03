@@ -25,7 +25,7 @@ public class Account {
     private Long requiredMinimumBalance;
     private Boolean isMinimumBalanceRequired;
     private List<RecurringTransaction> recurringTransactions;
-    private List<Transaction> accountHistory;
+    private List<PastTransaction> accountHistory;
 
     public Long getBalance() {
         return balance;
@@ -59,7 +59,7 @@ public class Account {
         return recurringTransactions;
     }
 
-    public List<Transaction> getAccountHistory() {
+    public List<PastTransaction> getAccountHistory() {
         return accountHistory;
     }
 
@@ -91,7 +91,7 @@ public class Account {
         this.recurringTransactions = recurringTransactions;
     }
 
-    public void setAccountHistory(List<Transaction> accountHistory) {
+    public void setAccountHistory(List<PastTransaction> accountHistory) {
         this.accountHistory = accountHistory;
     }
 

@@ -25,9 +25,9 @@ public class AccountTests {
         accountWithHistory.setRequiredMinimumBalance(50000L); //$500.00 no interest when this hits
         accountWithHistory.setIsMinimumBalanceRequired(true);
 
-        RecurringTransaction debit5DollarsPerDay = new RecurringTransaction(-500L, Interval.DAILY);
-        RecurringTransaction credit100DollarsPerMonth = new RecurringTransaction(10000L, Interval.MONTHLY);
-        RecurringTransaction credit5000DollarsPerYear = new RecurringTransaction(500000L, Interval.ANNUALLY);
+        RecurringTransaction debit5DollarsPerDay = new RecurringTransaction(-500L, 365);
+        RecurringTransaction credit100DollarsPerMonth = new RecurringTransaction(10000L, 12);
+        RecurringTransaction credit5000DollarsPerYear = new RecurringTransaction(500000L, 1);
 
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
         recurringTransactions.add(credit100DollarsPerMonth);

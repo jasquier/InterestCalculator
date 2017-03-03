@@ -7,6 +7,10 @@ public abstract class Transaction {
 
     private Long amount;
 
+    public Transaction() {
+        this.amount = 0L;
+    }
+
     public Transaction(Long amount) {
         this.amount = amount;
     }
