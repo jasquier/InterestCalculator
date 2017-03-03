@@ -1,6 +1,8 @@
 package team.squad.accounts;
 
-import team.squad.builders.AccountBuilder;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.List;
 
@@ -17,9 +19,15 @@ import java.util.List;
  * "Account object with balance ✓ & interest rate ✓ properties, TRANSACTION HISTORY (is this ledger balance?),
  *      overdraft ✓ & minimum balance info ✓ & a list of recurring transactions ✓"
  */
+// this isn't right
+@JsonIgnoreProperties(value = {"balance", "ledgerBalance", "accountType",
+                                "interestRate", "overDraftPenalty", "requiredMinimumBalance",
+                                "isMinimumBalanceRequired", "recurringTransactions",
+                                "accountHistory"}, allowSetters = true)
 public class Account {
 
-    private String ID;
+    private Integer ID;
+    private static Integer nextID = 1;
     private Long balance; // in pennies
     private Long ledgerBalance;
     private String accountType; // does this even matter?
@@ -30,25 +38,16 @@ public class Account {
     private List<RecurringTransaction> recurringTransactions;
     private List<PastTransaction> accountHistory;
 
-    public Account(AccountBuilder builder) {
-
-
-    }
-
     public Account() {
-
+        ID = nextID++;
     }
-//
-//
-//    public static Account getAccountInfoByID(String ID) {
-//        // this will hit the database at some point
-//        // this is most definitely wrong
-//        return new Account();
-//    }
 
-    public String getID() { return "27"; }
+    public Integer getID() {
+        return ID;
+    }
 
     public Long getBalance() {
+        System.out.println("in get balance");
         return balance;
     }
 
@@ -86,6 +85,7 @@ public class Account {
 
     public void setBalance(Long balance) {
         this.balance = balance;
+        System.out.println(this.balance);
     }
 
     public void setAccountType(String accountType) {
@@ -118,7 +118,6 @@ public class Account {
 
     public void calculateLedgerBalance(Integer interval) {
         ledgerBalance = balance + getAdjustedBalance(interval);
-        return;
     }
 
     private Long getAdjustedBalance(Integer interval) {
@@ -137,6 +136,4 @@ public class Account {
         }
         return adjustedAmount;
     }
-
-
 }

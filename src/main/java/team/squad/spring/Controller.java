@@ -2,7 +2,7 @@ package team.squad.spring;
 
 import org.springframework.web.bind.annotation.*;
 import team.squad.accounts.Account;
-import team.squad.builders.AccountBuilder;
+import team.squad.interest.InterestCalculator;
 
 /**
  * @author John A. Squier
@@ -19,18 +19,11 @@ public class Controller {
         return account;
     }
 
-//    // Get account info GET
-//    @CrossOrigin
-//    @RequestMapping(value = "/getAccount", method = RequestMethod.GET, consumes = {"text/plain"})
-//    public @ResponseBody Account getAccountInfo(String ID) {
-//
-//    }
-
-    // Calculate interest GET
-//    @CrossOrigin
-//    @RequestMapping(value = "/interestCalculator", method = RequestMethod.GET, consumes = {"application/json"})
-//    public @ResponseBody InterestCalculator getInterestAmount(String ID, Integer interval, Integer frequency,
-//                                                              Long interestAmount, InterestType interestType,CalculationRule rule, Integer numDaysForRule) {
-//        return InterestCalculatorBuilder.;
-//    }
+    // Calculate interest POST
+    @CrossOrigin
+    @RequestMapping(value = "/interestCalculator", method = RequestMethod.POST, consumes = {"application/json"})
+    public @ResponseBody
+    InterestCalculator getInterestAmount(@RequestBody InterestCalculator interestCalculator) {
+        return interestCalculator;
+    }
 }
