@@ -3,6 +3,10 @@ package team.squad;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.context.TestExecutionListeners;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author John A. Squier
@@ -97,7 +101,7 @@ public class InterestCalculatorTests {
         Assert.assertEquals(expected, actual);
     }
 
-    @Test
+    @Test // TODO this needs changed, we are gonna get a penalty when overdrawn
     public void calcSimpleInterestWithNegativeBalanceAndNoRMB() {
         long expected = 0L;
         account.setBalance(-100L); // $-1.00
@@ -165,6 +169,122 @@ public class InterestCalculatorTests {
         account.setRequiredMinimumBalance(0L);
 
         long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestWithZeroBalanceBelowRMB() {
+        long expected = -2L;
+        account.setBalance(1000L);
+        account.setIsMinimumBalanceRequired(true);
+        account.setRequiredMinimumBalance(10000L);
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestNegativeBalanceNoRMB() {
+        long expected = -2L;
+        account.setBalance(-1000L);
+        account.setIsMinimumBalanceRequired(false);
+        account.setRequiredMinimumBalance(0L);
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestNegativeBalanceWithRMB() {
+        long expected = -2L;
+        account.setBalance(-1000L);
+        account.setIsMinimumBalanceRequired(true);
+        account.setRequiredMinimumBalance(50000L);
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcSimpleInterestNonZeroBalanceWithDeductionsThatDoNotExceedInterest() {
+        long expected = -2L;
+        account.setBalance(1000000L);
+        account.setIsMinimumBalanceRequired(false);
+        account.setRequiredMinimumBalance(0L);
+        RecurringTransaction debit1DollarPerMonth = new RecurringTransaction(-100L, Interval.MONTHLY);
+        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
+        recurringTransactions.add(debit1DollarPerMonth);
+        account.setRecurringTransactions(recurringTransactions);
+
+        long actual = simpleInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcSimpleInterestNonZeroBalanceWithDeductionsThatDoExceedInterestEarned() {
+        long expected = -2L;
+        account.setBalance(1000000L);
+        account.setIsMinimumBalanceRequired(false);
+        account.setRequiredMinimumBalance(0L);
+        RecurringTransaction debit100DollarsPerMonth = new RecurringTransaction(-10000L, Interval.MONTHLY);
+        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
+        recurringTransactions.add(debit100DollarsPerMonth);
+        account.setRecurringTransactions(recurringTransactions);
+
+        long actual = simpleInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestNonZeroBalanceWithDeductionsThatDoNotExceedInterest() {
+        long expected = -200L;
+        account.setBalance(1000000L);
+        account.setIsMinimumBalanceRequired(false);
+        account.setRequiredMinimumBalance(0L);
+        RecurringTransaction debit1DollarPerMonth = new RecurringTransaction(-100L, Interval.MONTHLY);
+        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
+        recurringTransactions.add(debit1DollarPerMonth);
+        account.setRecurringTransactions(recurringTransactions);
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcComplexInterestNonZeroBalanceWithDeductionsThatDoExceedInterest() {
+        long expected = -300L;
+        account.setBalance(1000000L);
+        account.setIsMinimumBalanceRequired(false);
+        account.setRequiredMinimumBalance(0L);
+        RecurringTransaction debit1000DollarsPerMonth = new RecurringTransaction(-100100L, Interval.MONTHLY);
+        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
+        recurringTransactions.add(debit1000DollarsPerMonth);
+        account.setRecurringTransactions(recurringTransactions);
+
+        long actual = complexInterestCalculator.getInterestAmount();
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void calcSimpleInterestNonZeroBalanceAndBelowRMBWithCreditsThatDoNotBringBalanceAboveRMB() {
+        long expected = 0L;
+        account.setBalance(100L);
+        account.setIsMinimumBalanceRequired(true);
+        account.setRequiredMinimumBalance(1000000L);
+        RecurringTransaction credit1DollarPerMonth = new RecurringTransaction(100L, Interval.MONTHLY);
+        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
+        recurringTransactions.add(credit1DollarPerMonth);
+        account.setRecurringTransactions(recurringTransactions);
+
+        long actual = simpleInterestCalculator.getInterestAmount();
 
         Assert.assertEquals(expected, actual);
     }
