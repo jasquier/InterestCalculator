@@ -191,7 +191,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestNegativeBalanceNoRMB() {
-        long expected = -2L;
+        long expected = 0L;
         account.setBalance(-1000L);
         account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
@@ -203,7 +203,7 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcComplexInterestNegativeBalanceWithRMB() {
-        long expected = -2L;
+        long expected = 0L;
         account.setBalance(-1000L);
         account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(50000L);
