@@ -72,7 +72,7 @@ public class InterestCalculator {
 
     public void calculateSimpleInterest() {
         if( canEarnInterest())
-            interestAmount = (long) (account.getBalance()*setRMBInterest()*(interval/365));
+            interestAmount = (long) (account.getBalance()*getRMBInterest()*(interval/365));
         else
             interestAmount = 0L;
     }
@@ -80,17 +80,17 @@ public class InterestCalculator {
     public void calculateComplexInterest() {
         //A = P (1 + r/n) (nt)
         long initialPrinciple = account.getBalance() - getOverDraftPenalty();
-        double rate = setRMBInterest();
+        double rate = getInterestRate()/frequency;
         double compoundedOverYears = frequency * (interval/365);
         interestAmount = (long) (initialPrinciple * (Math.pow(1+ rate, compoundedOverYears) - 1));
     }
 
     protected boolean isUnderRMB(){
-        return (account.getBalance() <= account.getRequiredMinimumBalance());
+        return (account.getBalance() <= account.getRequiredMinimumBalance() && account.getIsMinimumBalanceRequired());
     }
 
-    protected double setRMBInterest() {
-        return (account.getIsMinimumBalanceRequired() && isUnderRMB()) ? 0.00 : account.getInterestRate();
+    protected double getRMBInterest() {
+        return (isUnderRMB()) ? 0.00 : account.getInterestRate();
     }
 
     protected boolean isThereAccountHistory(){
@@ -106,22 +106,22 @@ public class InterestCalculator {
     }
 
     protected boolean isOverDrawn(){
-        return  account.getIsMinimumBalanceRequired() && account.getBalance() < 0;
+        return account.getBalance() < 0;
     }
 
     protected long getOverDraftPenalty(){
         return (isOverDrawn()) ? account.getOverDraftPenalty() : 0;
     }
 
-    protected double getOverDraftInterest(){
-        return (isOverDrawn()) ? 0.00 : account.getInterestRate();
-    }
-
     private double getInterestRate() {
         double rate;
-        rate = getOverDraftInterest();
-        rate = setRMBInterest();
-        return rate;
+        if (canEarnInterest())
+            return account.getInterestRate();
+        else if (isOverDrawn())
+            return 0.00;
+        else
+            return getRMBInterest();
+
     }
     private boolean canEarnInterest(){
         return !isUnderRMB() &&  isPositiveBalance();
