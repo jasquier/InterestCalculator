@@ -17,7 +17,8 @@ import java.util.Date;
 
 /**
  * @author John A. Squier
- * add your name when you work on this file.
+ * @author Milton Marwa (mkulima) .
+ * @author Randall Crane
  */
 public class InterestCalculatorTests {
 
@@ -227,34 +228,31 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcSimpleInterestNonZeroBalanceWithDeductionsThatDoNotExceedInterest() {
-        long expected = -2L;
-        account.setBalance(1000000L);
-        account.setIsMinimumBalanceRequired(false);
-        account.setRequiredMinimumBalance(0L);
-        RecurringTransaction debit1DollarPerMonth = new RecurringTransaction(-100L, 12);
-        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
-        recurringTransactions.add(debit1DollarPerMonth);
-        account.setRecurringTransactions(recurringTransactions);
 
+        RecurringTransaction debit10DollarsPerMonth = new RecurringTransaction(-1000L, 12);
+        simpleInterestCalculator.setAccount(new Account(100000L, 0.1, 0L, debit10DollarsPerMonth));
+        simpleInterestCalculator.setCalculationRule(CalculationRule.NONE);
         long actual = simpleInterestCalculator.getInterestAmount();
+        Assert.assertEquals(10000L, actual);
 
-        Assert.assertEquals(expected, actual);
+        simpleInterestCalculator.setCalculationRule(CalculationRule.AVERAGE);
+        long actual2 = simpleInterestCalculator.getInterestAmount();
+        Assert.assertEquals(9400L, actual2);
     }
 
     @Test
     public void calcSimpleInterestNonZeroBalanceWithDeductionsThatDoExceedInterestEarned() {
-        long expected = -2L;
-        account.setBalance(1000000L);
-        account.setIsMinimumBalanceRequired(false);
-        account.setRequiredMinimumBalance(0L);
-        RecurringTransaction debit100DollarsPerMonth = new RecurringTransaction(-10000L, 12);
-        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
-        recurringTransactions.add(debit100DollarsPerMonth);
-        account.setRecurringTransactions(recurringTransactions);
 
+        RecurringTransaction debit20DollarsPerMonth = new RecurringTransaction(-2000L, 12);
+        simpleInterestCalculator.setAccount(new Account(100000L, 0.1, 0L, debit20DollarsPerMonth));
+        simpleInterestCalculator.setCalculationRule(CalculationRule.NONE);
         long actual = simpleInterestCalculator.getInterestAmount();
+        Assert.assertEquals(10000L, actual);
 
-        Assert.assertEquals(expected, actual);
+        simpleInterestCalculator.setCalculationRule(CalculationRule.AVERAGE);
+        long actual2 = simpleInterestCalculator.getInterestAmount();
+        Assert.assertEquals(8800L, actual2);
+
     }
 
     @Test
@@ -291,34 +289,24 @@ public class InterestCalculatorTests {
 
     @Test
     public void calcSimpleInterestNonZeroBalanceAndBelowRMBWithCreditsThatDoNotBringBalanceAboveRMB() {
-        long expected = 0L;
-        account.setBalance(100L);
-        account.setIsMinimumBalanceRequired(true);
-        account.setRequiredMinimumBalance(1000000L);
-        RecurringTransaction credit1DollarPerMonth = new RecurringTransaction(100L, 12);
-        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
-        recurringTransactions.add(credit1DollarPerMonth);
-        account.setRecurringTransactions(recurringTransactions);
-
+        RecurringTransaction credit1DollarsPerMonth = new RecurringTransaction(100L, 12);
+        simpleInterestCalculator.setAccount(new Account(100L, 0.1, 100000L, credit1DollarsPerMonth));
+        simpleInterestCalculator.setCalculationRule(CalculationRule.NONE);
         long actual = simpleInterestCalculator.getInterestAmount();
-
-        Assert.assertEquals(expected, actual);
+        Assert.assertEquals(0L, actual);
     }
 
     @Test
     public void calcSimpleInterestNonZeroBalanceAndBelowRMBWithCreditsThatDoBringBalanceAboveRMB() {
-        long expected = -2L;
-        account.setBalance(900000L); // $9000.00
-        account.setIsMinimumBalanceRequired(true);
-        account.setRequiredMinimumBalance(1000000L); // $10,000
-        RecurringTransaction credit500DollarsPerMonth = new RecurringTransaction(50000L, 12);
-        List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
-        recurringTransactions.add(credit500DollarsPerMonth);
-        account.setRecurringTransactions(recurringTransactions);
-
+        RecurringTransaction credit20DollarsPerMonth = new RecurringTransaction(2000L, 12);
+        simpleInterestCalculator.setAccount(new Account(10000L, 0.1, 20000L, credit20DollarsPerMonth));
+        simpleInterestCalculator.setCalculationRule(CalculationRule.NONE);
         long actual = simpleInterestCalculator.getInterestAmount();
+        Assert.assertEquals("Simple interest CalculationRuleNONE",0L, actual);
 
-        Assert.assertEquals(expected, actual);
+        simpleInterestCalculator.setCalculationRule(CalculationRule.AVERAGE);
+        long actual2 = simpleInterestCalculator.getInterestAmount();
+        Assert.assertEquals("Simple interest CalculationRuleAVERAGE", 2200L, actual2);
     }
 
     @Test
@@ -352,6 +340,34 @@ public class InterestCalculatorTests {
 
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void calcSimpleInterestOverdrawnWithCreditsThatDoNotBringBalanceAboveZERO() {
+        RecurringTransaction credit2DollarsPerMonth = new RecurringTransaction(200L, 12);
+        simpleInterestCalculator.setAccount(new Account(-10000L, 0.1, 0L, credit2DollarsPerMonth));
+        simpleInterestCalculator.setCalculationRule(CalculationRule.NONE);
+        long actual = simpleInterestCalculator.getInterestAmount();
+        Assert.assertEquals(0L, actual);
+
+        simpleInterestCalculator.setCalculationRule(CalculationRule.AVERAGE);
+        long actual2 = simpleInterestCalculator.getInterestAmount();
+        Assert.assertEquals(0L, actual2);
+    }
+
+    @Test
+    public void calcSimpleInterestOverdrawnWithCreditsThatBringBalanceAboveZERO() {
+        RecurringTransaction credit20DollarsPerMonth = new RecurringTransaction(2000L, 12);
+        simpleInterestCalculator.setAccount(new Account(-100L, 0.1, 0L, credit20DollarsPerMonth));
+        simpleInterestCalculator.setCalculationRule(CalculationRule.NONE);
+        long actual = simpleInterestCalculator.getInterestAmount();
+        Assert.assertEquals(0L, actual);
+
+        simpleInterestCalculator.setCalculationRule(CalculationRule.AVERAGE);
+        long actual2 = simpleInterestCalculator.getInterestAmount();
+        Assert.assertEquals(1190L, actual2);
+    }
+
+
 
     @Test
     public void balanceMinTest(){
