@@ -18,14 +18,14 @@ import java.util.List;
 public class Account {
 
     private Long balance; // in pennies
-    private Long ledgerBalance; // wait are we gonna calculate this from recurring transactions?
+    private Long ledgerBalance;
     private String accountType; // does this even matter?
     private Double interestRate; // A.P.Y.
     private Long overDraftPenalty;
     private Long requiredMinimumBalance;
     private Boolean isMinimumBalanceRequired;
     private List<RecurringTransaction> recurringTransactions;
-    private List<RecurringTransaction> accountHistory;
+    private List<Transaction> accountHistory;
 
     public Long getBalance() {
         return balance;
@@ -59,7 +59,7 @@ public class Account {
         return recurringTransactions;
     }
 
-    public List<RecurringTransaction> getAccountHistory() {
+    public List<Transaction> getAccountHistory() {
         return accountHistory;
     }
 
@@ -91,13 +91,31 @@ public class Account {
         this.recurringTransactions = recurringTransactions;
     }
 
-    public void setAccountHistory(List<RecurringTransaction> accountHistory) {
+    public void setAccountHistory(List<Transaction> accountHistory) {
         this.accountHistory = accountHistory;
     }
 
     public void calculateLedgerBalance(Integer interval) {
-        // TODO do stuff and set ledger balance from recurring transactions and
-        // use interval to calculate ledger balance along with recurring transactions
+        ledgerBalance = balance + getAdjustedBalance(interval);
         return;
     }
+
+    private Long getAdjustedBalance(Integer interval) {
+        Long adjustedAmount = 0L;
+
+        for ( RecurringTransaction r : recurringTransactions ) {
+            if ( r.getFrequency().equals(Interval.DAILY) ) {
+                adjustedAmount += r.getAmount() * interval;
+            }
+            else if ( r.getFrequency().equals(Interval.MONTHLY) ) {
+                adjustedAmount += r.getAmount() * (interval / 30);
+            }
+            else if ( r.getFrequency().equals(Interval.ANNUALLY) ) {
+                adjustedAmount += r.getAmount() * (interval / 365);
+            }
+        }
+        return adjustedAmount;
+    }
+
+
 }
