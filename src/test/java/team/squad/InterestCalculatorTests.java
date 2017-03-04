@@ -364,10 +364,19 @@ public class InterestCalculatorTests {
 
     @Test
     public void balanceMin1dayTest(){
-        long expected = 2;
+        long expected = 9730;
         account.setBalance(10000L);
         account.setAccountHistory(pastTransactionList);
         long actual = complexInterestCalculator.balanceMinimum(1, new Date(2017, 03, 25));
+        Assert.assertEquals(expected,actual);
+    }
+
+    @Test
+    public void balanceMaxTest(){
+        long expected = 10230;
+        account.setBalance(10000L);
+        account.setAccountHistory(pastTransactionList);
+        long actual = complexInterestCalculator.balanceMaximum(30, new Date(2017, 03, 30));
         Assert.assertEquals(expected,actual);
     }
 }
