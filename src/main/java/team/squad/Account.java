@@ -25,7 +25,7 @@ public class Account {
     private Long requiredMinimumBalance;
     private Boolean isMinimumBalanceRequired;
     private List<RecurringTransaction> recurringTransactions;
-
+    private List<RecurringTransaction> accountHistory;
 
     public Long getBalance() {
         return balance;
@@ -59,6 +59,10 @@ public class Account {
         return recurringTransactions;
     }
 
+    public List<RecurringTransaction> getAccountHistory() {
+        return accountHistory;
+    }
+
     public void setBalance(Long balance) {
         this.balance = balance;
     }
@@ -85,6 +89,10 @@ public class Account {
 
     public void setRecurringTransactions(List<RecurringTransaction> recurringTransactions) {
         this.recurringTransactions = recurringTransactions;
+    }
+
+    public void setAccountHistory(List<RecurringTransaction> accountHistory) {
+        this.accountHistory = accountHistory;
     }
 
     public void calculateLedgerBalance(Integer interval) {
