@@ -1,6 +1,7 @@
 package team.squad;
 
 import org.junit.Before;
+import team.squad.interest.InterestType;
 
 /**
  * @author John A. Squier
