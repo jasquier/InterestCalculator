@@ -3,6 +3,7 @@ package team.squad;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import team.squad.accounts.Account;
 
 import java.util.List;
 
