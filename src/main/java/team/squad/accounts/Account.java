@@ -1,11 +1,22 @@
 package team.squad.accounts;
 
-import team.squad.builders.AccountBuilder;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author John A. Squier
+ * @author Milton Marwa
  * add your name when you work on this file.
  *
  * TODO figure out if the instance fields need to be Objects or if they can be primitives i.e. long vs Long.
@@ -17,9 +28,24 @@ import java.util.List;
  * "Account object with balance ✓ & interest rate ✓ properties, TRANSACTION HISTORY (is this ledger balance?),
  *      overdraft ✓ & minimum balance info ✓ & a list of recurring transactions ✓"
  */
+
+@Entity
+
+// this isn't right
+@JsonIgnoreProperties(value = {"balance", "ledgerBalance", "accountType",
+                                "interestRate", "overDraftPenalty", "requiredMinimumBalance",
+                                "isMinimumBalanceRequired", "recurringTransactions",
+                                "accountHistory"}, allowSetters = true)
 public class Account {
 
-    private String ID;
+
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO)
+    private Long id;
+    private Long accountNumber;
+
+    private Integer ID;
+    private static Integer nextID = 1;
     private Long balance; // in pennies
     private Long ledgerBalance;
     private String accountType; // does this even matter?
@@ -30,25 +56,33 @@ public class Account {
     private List<RecurringTransaction> recurringTransactions;
     private List<PastTransaction> accountHistory;
 
-    public Account(AccountBuilder builder) {
+    public Long getAccountNumber() {
+        return accountNumber;
+    }
 
-
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public Account() {
-
+        ID = nextID++;
     }
-//
-//
-//    public static Account getAccountInfoByID(String ID) {
-//        // this will hit the database at some point
-//        // this is most definitely wrong
-//        return new Account();
-//    }
 
-    public String getID() { return "27"; }
+    // created by milton marwa 03/04/2017 to ease creation of accounts for tests
+    public Account(long balance, double interestRate, long RMB, RecurringTransaction recur){
+        this.balance=balance;
+        this.interestRate=interestRate;
+        this.requiredMinimumBalance = RMB;
+        this.recurringTransactions = new ArrayList<RecurringTransaction>();
+        this.recurringTransactions.add(recur);
+    }
+
+    public Integer getID() {
+        return ID;
+    }
 
     public Long getBalance() {
+        System.out.println("in get balance");
         return balance;
     }
 
@@ -73,7 +107,7 @@ public class Account {
     }
 
     public Boolean getIsMinimumBalanceRequired() {
-        return isMinimumBalanceRequired;
+        return requiredMinimumBalance > 0L;
     }
 
     public List<RecurringTransaction> getRecurringTransactions() {
@@ -86,6 +120,7 @@ public class Account {
 
     public void setBalance(Long balance) {
         this.balance = balance;
+        System.out.println(this.balance);
     }
 
     public void setAccountType(String accountType) {
@@ -118,7 +153,6 @@ public class Account {
 
     public void calculateLedgerBalance(Integer interval) {
         ledgerBalance = balance + getAdjustedBalance(interval);
-        return;
     }
 
     private Long getAdjustedBalance(Integer interval) {
@@ -138,5 +172,22 @@ public class Account {
         return adjustedAmount;
     }
 
+    /* This method loops over the list of recurring transactions and computes
+    the average balance of the account at each period.
+    The actual formula used is just ( t[start] + t[end] ) / 2
+    This is done for each recurring transaction in the list of recurring transactions . */
+    public long getAverageBalance() {
+        long[] netRecurringTransactions = new long[getRecurringTransactions().size()];
+        long localBalance = getBalance();
+        long avgBalance = 0;
 
+        for(int j=0; j<recurringTransactions.size(); j++){
+            for(int i=0; i<recurringTransactions.get(j).getFrequency(); i++){
+                netRecurringTransactions[j] += recurringTransactions.get(j).getAmount();
+            }
+            avgBalance = (localBalance + localBalance + netRecurringTransactions[j] ) / 2;
+            localBalance = avgBalance;
+        }
+        return avgBalance;
+    }
 }

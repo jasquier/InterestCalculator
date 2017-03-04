@@ -1,9 +1,16 @@
 package team.squad.interest;
 
 import team.squad.accounts.Account;
+import team.squad.accounts.AccountStore;
+import team.squad.accounts.PastTransaction;
+
+import java.util.Collections;
+import java.util.*;
 
 /**
  * @author John A. Squier
+ * @author Milton Marwa
+ * @author Randall Crane
  * add your name when you work on this file.
  *
  * TODO remove getters except interestAmount, others are for test purposes, I think
@@ -18,16 +25,22 @@ import team.squad.accounts.Account;
 public class InterestCalculator {
 
     private Account account; // get acct number perhaps and hit the backend
+    private Integer accountID;
     private Integer interval;   // in days
-    private Integer frequency; // a.k.a compounding period in days
+    private Integer frequency; // a.k.a num times per year we compound
     private Long interestAmount;
     private InterestType interestType;
-    private CalculationRule calculationRule;
+    private CalculationRule calculationRule;  /*possible values: NONE, AVERAGE, MAXIMUM, MINIMUM, TIME_OF_CREDIT,
+                                                                 EX_INTEREST_DATE, // num days
+                                                                 THRESHOLD_MAXIMUM, // num days
+                                                                 THRESHOLD_MINIMUM // num days */
     private Integer numDaysForRule;
 
-
+    public InterestCalculator() { }
 
     public Long getInterestAmount() {
+        System.out.println("ID = " + account.getID());
+
         if ( interestType.equals(InterestType.SIMPLE) ) {
             calculateSimpleInterest();
         }
@@ -41,29 +54,42 @@ public class InterestCalculator {
         this.account = account;
     }
 
+    public void setAccountID(Integer accountID) {
+        System.out.println("setting accountID = " + accountID);
+        this.accountID = accountID;
+        System.out.println("setting account by ID = " + this.accountID);
+        this.account = AccountStore.getAccountByID(accountID);
+        System.out.println("account balance = " + account.getBalance());
+    }
+
     public void setInterval(Integer interval) {
+        System.out.println("setting interval = " + interval);
         this.interval = interval;
     }
 
     public void setFrequency(Integer frequency) {
+        System.out.println("setting frequency = " + frequency);
         this.frequency = frequency;
     }
 
     public void setInterestType(InterestType interestType) {
+        System.out.println("setting interest type = " + interestType);
         this.interestType = interestType;
     }
 
     public void setCalculationRule(CalculationRule calculationRule) {
+        System.out.println("setting rule = " + calculationRule);
         this.calculationRule = calculationRule;
     }
 
     public void setNumDaysForRule(Integer numDaysForRule) {
+        System.out.println("setting numDaysForRule = " + numDaysForRule);
         this.numDaysForRule = numDaysForRule;
     }
 
     public void calculateSimpleInterest() {
         if( canEarnInterest())
-            interestAmount = (long) (account.getBalance()*getRMBInterest()*(interval/365));
+            interestAmount = (long) (getAccountBalance()*account.getInterestRate()*(interval/365));
         else
             interestAmount = 0L;
     }
@@ -77,7 +103,7 @@ public class InterestCalculator {
     }
 
     protected boolean isUnderRMB(){
-        return (account.getBalance() <= account.getRequiredMinimumBalance() && account.getIsMinimumBalanceRequired());
+        return getAccountBalance() < account.getRequiredMinimumBalance();
     }
 
     protected double getRMBInterest() {
@@ -114,12 +140,67 @@ public class InterestCalculator {
             return getRMBInterest();
 
     }
+
     private boolean canEarnInterest(){
-        return !isUnderRMB() &&  isPositiveBalance();
+            return !isUnderRMB() &&  isPositiveBalance();
     }
 
     private boolean isPositiveBalance() {
-        return account.getBalance() > 0;
+        return getAccountBalance() > 0;
     }
 
+    protected long getAccountBalance(){
+        long balance = 0L;
+        switch (calculationRule){
+            case AVERAGE:
+                balance = account.getAverageBalance();
+                break;
+
+            case EX_INTEREST_DATE:
+                balance = 333333L;
+                break;
+
+            case MAXIMUM:
+                balance = 333333L;
+                break;
+
+            case MINIMUM:
+                balance = 333333L;
+                break;
+
+            case NONE:
+                balance = account.getBalance();
+                break;
+
+            case THRESHOLD_MAXIMUM:
+                balance = 333333L;
+                break;
+
+            case THRESHOLD_MINIMUM:
+                balance = 333333L;
+                break;
+
+            case TIME_OF_CREDIT:
+                balance = 333333L;
+                break;
+
+            default:
+                balance = account.getBalance();
+        }
+        return  balance;
+    }
+
+    public long balanceMinimum(){
+        List<PastTransaction> accountHistory = account.getAccountHistory();
+        ArrayList<Long> balanceHistory = new ArrayList<>();
+        long balance = account.getBalance();
+        Collections.reverse(accountHistory);
+
+        for (PastTransaction item: accountHistory) {
+            balance -= item.getAmount();
+            balanceHistory.add(balance);
+        }
+        Collections.sort(balanceHistory);
+        return balanceHistory.get(0);
+    }
 }
