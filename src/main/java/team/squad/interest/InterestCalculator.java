@@ -143,13 +143,15 @@ public class InterestCalculator {
         return account.getBalance() > 0;
     }
 
-    public long balanceMinimum(){
+    public long balanceMinimum(int interestPeriod, Date date){
         List<PastTransaction> accountHistory = account.getAccountHistory();
         ArrayList<Long> balanceHistory = new ArrayList<>();
         long balance = account.getBalance();
         Collections.reverse(accountHistory);
 
         for (PastTransaction item: accountHistory) {
+            if ( date.getDate() - item.getDateOccurredOn().getDate() > interestPeriod)
+                break;
             balance -= item.getAmount();
             balanceHistory.add(balance);
         }
