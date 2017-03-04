@@ -9,6 +9,8 @@ import java.util.*;
 
 /**
  * @author John A. Squier
+ * @author Milton Marwa
+ * @author Randall Crane
  * add your name when you work on this file.
  *
  * TODO remove getters except interestAmount, others are for test purposes, I think
@@ -87,7 +89,7 @@ public class InterestCalculator {
 
     public void calculateSimpleInterest() {
         if( canEarnInterest())
-            interestAmount = (long) (getAccountBalance()*getRMBInterest()*(interval/365));
+            interestAmount = (long) (getAccountBalance()*account.getInterestRate()*(interval/365));
         else
             interestAmount = 0L;
     }
@@ -101,7 +103,7 @@ public class InterestCalculator {
     }
 
     protected boolean isUnderRMB(){
-        return (account.getBalance() <= account.getRequiredMinimumBalance() && account.getIsMinimumBalanceRequired());
+        return getAccountBalance() < account.getRequiredMinimumBalance();
     }
 
     protected double getRMBInterest() {
@@ -140,11 +142,11 @@ public class InterestCalculator {
     }
 
     private boolean canEarnInterest(){
-        return !isUnderRMB() &&  isPositiveBalance();
+            return !isUnderRMB() &&  isPositiveBalance();
     }
 
     private boolean isPositiveBalance() {
-        return account.getBalance() > 0;
+        return getAccountBalance() > 0;
     }
 
     protected long getAccountBalance(){

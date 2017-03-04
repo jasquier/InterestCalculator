@@ -80,7 +80,7 @@ public class AccountTests {
 
         long expectedAvgBalance = 130000L;
         long actualAvgBalance = accountWithHistory2.getAverageBalance();
-        System.out.println(actualAvgBalance);
+        System.out.println("avg bal: " + actualAvgBalance);
         Assert.assertEquals(expectedAvgBalance, actualAvgBalance);
     }
 }
