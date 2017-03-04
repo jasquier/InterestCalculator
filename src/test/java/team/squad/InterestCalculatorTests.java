@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import team.squad.accounts.Account;
+import team.squad.accounts.PastTransaction;
 import team.squad.accounts.RecurringTransaction;
 import team.squad.interest.CalculationRule;
 import team.squad.interest.InterestCalculator;
@@ -11,6 +12,8 @@ import team.squad.interest.InterestType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+
 
 /**
  * @author John A. Squier
@@ -20,7 +23,8 @@ public class InterestCalculatorTests {
 
     InterestCalculator simpleInterestCalculator, complexInterestCalculator;
     Account account;
-
+    List<PastTransaction> pastTransactionList;
+    PastTransaction item1, item2, item3;
     @Before
     public void setup() {
         account = new Account();
@@ -43,6 +47,14 @@ public class InterestCalculatorTests {
         complexInterestCalculator.setInterestType(InterestType.COMPLEX);
         complexInterestCalculator.setCalculationRule(CalculationRule.NONE);
         complexInterestCalculator.setNumDaysForRule(0);
+
+        pastTransactionList = new ArrayList<>();
+        item1 = new PastTransaction(-100L, new Date(2017,03,22));
+        item2 = new PastTransaction(500L, new Date(2017, 03, 23));
+        item3 = new PastTransaction(-230L, new Date(2017, 03, 24));
+        pastTransactionList.add(item1);
+        pastTransactionList.add(item2);
+        pastTransactionList.add(item3);
     }
 
     @Test
@@ -341,5 +353,14 @@ public class InterestCalculatorTests {
         long actual = complexInterestCalculator.getInterestAmount();
 
         Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void balanceMinTest(){
+        long expected = 9730;
+        account.setBalance(10000L);
+        account.setAccountHistory(pastTransactionList);
+        long actual = complexInterestCalculator.balanceMinimum();
+        Assert.assertEquals(expected,actual);
     }
 }
