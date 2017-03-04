@@ -3,6 +3,7 @@ package team.squad.interest;
 import team.squad.accounts.Account;
 import team.squad.accounts.AccountStore;
 import team.squad.accounts.PastTransaction;
+import team.squad.accounts.RecurringTransaction;
 
 import java.util.Collections;
 import java.util.*;
@@ -100,6 +101,8 @@ public class InterestCalculator {
         double rate = getInterestRate()/frequency;
         double compoundedOverYears = frequency * (interval/360);
         interestAmount = (long) (initialPrinciple * (Math.pow(1+ rate, compoundedOverYears) - 1));
+        if (account.getRecurringTransactions().size()>0)
+            interestAmount+= recurringTransactionFormula();
     }
 
     protected boolean isUnderRMB(){
@@ -220,6 +223,17 @@ public class InterestCalculator {
         }
         Collections.sort(balanceHistory);
         return balanceHistory.get(balanceHistory.size() - 1);
+    }
+    //[ PMT × (((1 + r/n)^nt - 1) / (r/n)) ]
+    protected long recurringTransactionFormula(){
+        long results = 0;
+        for (RecurringTransaction item :account.getRecurringTransactions()) {
+            results+= item.getAmount() *
+                    ((Math.pow(1 + account.getInterestRate()/item.getFrequency(), item.getFrequency()*frequency) - 1)
+                    /(item.getFrequency()/frequency));
+        }
+
+         return results;
     }
 }
 
