@@ -232,7 +232,6 @@ public class InterestCalculator {
                     ((Math.pow(1 + account.getInterestRate()/item.getFrequency(), item.getFrequency()*frequency) - 1)
                     /(item.getFrequency()/frequency));
         }
-
          return results;
     }
 }
