@@ -1,17 +1,12 @@
 package team.squad.accounts;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.AbstractList;
 import java.util.ArrayList;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-import java.util.Arrays;
 import java.util.List;
 
 /**
