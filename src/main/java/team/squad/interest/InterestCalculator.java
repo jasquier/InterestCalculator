@@ -9,6 +9,8 @@ import java.util.*;
 
 /**
  * @author John A. Squier
+ * @author Milton Marwa
+ * @author Randall Crane
  * add your name when you work on this file.
  *
  * TODO remove getters except interestAmount, others are for test purposes, I think
@@ -28,13 +30,18 @@ public class InterestCalculator {
     private Integer frequency; // a.k.a num times per year we compound
     private Long interestAmount;
     private InterestType interestType;
-    private CalculationRule calculationRule;  /*possible values: NONE, AVERAGE, MAXIMUM, MINIMUM, TIME_OF_CREDIT,
-                                                                 EX_INTEREST_DATE, // num days
-                                                                 THRESHOLD_MAXIMUM, // num days
-                                                                 THRESHOLD_MINIMUM // num days */
+    private CalculationRule calculationRule;
     private Integer numDaysForRule;
 
     public InterestCalculator() { }
+
+    public InterestCalculator(Account ac, int interval, InterestType interestType, CalculationRule calcRule) {
+        this.account = ac;
+        this.interval = interval;
+        //this.frequency = freq;
+        this.interestType = interestType;
+        this.calculationRule = calcRule;
+    }
 
     public Long getInterestAmount() {
         System.out.println("ID = " + account.getID());
@@ -87,7 +94,7 @@ public class InterestCalculator {
 
     public void calculateSimpleInterest() {
         if( canEarnInterest())
-            interestAmount = (long) (getAccountBalance()*getRMBInterest()*(interval/365));
+            interestAmount = (long) (getAccountBalance()*account.getInterestRate()*(interval/365));
         else
             interestAmount = 0L;
     }
@@ -101,7 +108,7 @@ public class InterestCalculator {
     }
 
     protected boolean isUnderRMB(){
-        return (account.getBalance() <= account.getRequiredMinimumBalance() && account.getIsMinimumBalanceRequired());
+        return getAccountBalance() < account.getRequiredMinimumBalance();
     }
 
     protected double getRMBInterest() {
@@ -140,11 +147,11 @@ public class InterestCalculator {
     }
 
     private boolean canEarnInterest(){
-        return !isUnderRMB() &&  isPositiveBalance();
+            return !isUnderRMB() &&  isPositiveBalance();
     }
 
     private boolean isPositiveBalance() {
-        return account.getBalance() > 0;
+        return getAccountBalance() > 0;
     }
 
     protected long getAccountBalance(){
@@ -171,7 +178,7 @@ public class InterestCalculator {
                 break;
 
             case THRESHOLD_MAXIMUM:
-                balance = 333333L;
+                balance = account.getMinimumBalance();
                 break;
 
             case THRESHOLD_MINIMUM:

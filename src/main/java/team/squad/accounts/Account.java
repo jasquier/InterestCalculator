@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,6 +16,7 @@ import java.util.List;
 
 /**
  * @author John A. Squier
+ * @author Milton Marwa
  * add your name when you work on this file.
  *
  * TODO figure out if the instance fields need to be Objects or if they can be primitives i.e. long vs Long.
@@ -62,10 +64,17 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
-    public Account() { }
-
     public Account() {
         ID = nextID++;
+    }
+
+    // created by milton marwa 03/04/2017 to ease creation of accounts for tests
+    public Account(long balance, double interestRate, long RMB, RecurringTransaction recur){
+        this.balance=balance;
+        this.interestRate=interestRate;
+        this.requiredMinimumBalance = RMB;
+        this.recurringTransactions = new ArrayList<RecurringTransaction>();
+        this.recurringTransactions.add(recur);
     }
 
     public Integer getID() {
@@ -98,7 +107,7 @@ public class Account {
     }
 
     public Boolean getIsMinimumBalanceRequired() {
-        return isMinimumBalanceRequired;
+        return requiredMinimumBalance > 0L;
     }
 
     public List<RecurringTransaction> getRecurringTransactions() {
@@ -180,5 +189,20 @@ public class Account {
             localBalance = avgBalance;
         }
         return avgBalance;
+    }
+
+    public long getMinimumBalance() {
+        long[] netRecurringTransactions2 = new long[getRecurringTransactions().size()];
+        long minBalance = 0;
+        long recurringBalance = getBalance();
+
+        for(int j=0; j<recurringTransactions.size(); j++){
+            for(int i=0; i<recurringTransactions.get(j).getFrequency(); i++){
+                netRecurringTransactions2[j] += recurringTransactions.get(j).getAmount();
+            }
+            minBalance = (recurringBalance + recurringBalance + netRecurringTransactions2[j] ) / 2;
+            recurringBalance = minBalance;
+        }
+        return minBalance;
     }
 }
