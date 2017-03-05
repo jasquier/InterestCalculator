@@ -63,7 +63,6 @@ public class InterestCalculatorTests {
         long expected = 10000L;
         account.setBalance(100000L); //$1000.00
         account.setRequiredMinimumBalance(0L);
-        account.setIsMinimumBalanceRequired(false);
 
         long actual = simpleInterestCalculator.getInterestAmount();
 

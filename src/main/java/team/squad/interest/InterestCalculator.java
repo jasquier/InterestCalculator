@@ -31,13 +31,18 @@ public class InterestCalculator {
     private Integer frequency; // a.k.a num times per year we compound
     private Long interestAmount;
     private InterestType interestType;
-    private CalculationRule calculationRule;  /*possible values: NONE, AVERAGE, MAXIMUM, MINIMUM, TIME_OF_CREDIT,
-                                                                 EX_INTEREST_DATE, // num days
-                                                                 THRESHOLD_MAXIMUM, // num days
-                                                                 THRESHOLD_MINIMUM // num days */
+    private CalculationRule calculationRule;
     private Integer numDaysForRule;
 
     public InterestCalculator() { }
+
+    public InterestCalculator(Account ac, int interval, InterestType interestType, CalculationRule calcRule) {
+        this.account = ac;
+        this.interval = interval;
+        //this.frequency = freq;
+        this.interestType = interestType;
+        this.calculationRule = calcRule;
+    }
 
     public Long getInterestAmount() {
         System.out.println("ID = " + account.getID());
@@ -176,7 +181,7 @@ public class InterestCalculator {
                 break;
 
             case THRESHOLD_MAXIMUM:
-                balance = 333333L;
+                balance = account.getMinimumBalance();
                 break;
 
             case THRESHOLD_MINIMUM:
