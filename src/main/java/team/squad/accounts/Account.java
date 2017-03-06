@@ -30,7 +30,6 @@ import java.util.List;
                                 "accountHistory"}, allowSetters = true)
 public class Account {
 
-
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
     private Long ID;
