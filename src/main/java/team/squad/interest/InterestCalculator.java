@@ -165,7 +165,7 @@ public class InterestCalculator {
                 break;
 
             case EX_INTEREST_DATE:
-                balance = 333333L;
+                balance = 0L;
                 break;
 
             case MAXIMUM:
@@ -181,15 +181,15 @@ public class InterestCalculator {
                 break;
 
             case THRESHOLD_MAXIMUM:
-                balance = 333333L;
+                balance = 0L;
                 break;
 
             case THRESHOLD_MINIMUM:
-                balance = 333333L;
+                balance = 0L;
                 break;
 
             case TIME_OF_CREDIT:
-                balance = 333333L;
+                balance = 0L;
                 break;
 
             default:
