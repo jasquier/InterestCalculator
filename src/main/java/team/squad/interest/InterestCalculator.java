@@ -46,8 +46,6 @@ public class InterestCalculator {
     }
 
     public Long getInterestAmount() {
-        System.out.println("ID = " + account.getID());
-
         if ( interestType.equals(InterestType.SIMPLE) ) {
             calculateSimpleInterest();
         }
@@ -65,7 +63,6 @@ public class InterestCalculator {
         System.out.println("setting accountID = " + accountID);
         this.accountID = accountID;
         System.out.println("setting account by ID = " + this.accountID);
-        this.account = AccountStore.getAccountByID(accountID);
         System.out.println("account balance = " + account.getBalance());
     }
 

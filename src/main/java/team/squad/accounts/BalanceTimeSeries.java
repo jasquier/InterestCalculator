@@ -13,7 +13,7 @@ public class BalanceTimeSeries {
 
     /**
      * @param ac the account whose baseline history is to be generated
-     * @param numOccurences basically number of x-axis ticks
+     * @param numOccurrences basically number of x-axis ticks
      **/
     public List<long[]> makeBaselineHistory(Account ac, int numOccurrences){
         int ticks = numOccurrences;

@@ -15,12 +15,4 @@ public class AccountStore {
         accounts.add(account);
     }
 
-    public static Account getAccountByID(Integer ID) {
-        for ( Account a : accounts ) {
-            if (a.getID().equals(ID) ) {
-                return a;
-            }
-        }
-        return null; // should be an exception
-    }
 }
