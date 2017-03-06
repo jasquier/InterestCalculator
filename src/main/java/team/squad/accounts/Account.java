@@ -1,11 +1,8 @@
 package team.squad.accounts;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +21,13 @@ import java.util.List;
  *      overdraft ✓ & minimum balance info ✓ & a list of recurring transactions ✓"
  */
 
+
 public class Account {
 
-    private Long id;
-    private Long accountNumber;
 
-    private Integer ID;
+    private Integer accountNumber;
     private static Integer nextID = 1;
+
     private Long balance; // in pennies
     private Long ledgerBalance;
     private String accountType; // does this even matter?
@@ -41,16 +38,8 @@ public class Account {
     private List<RecurringTransaction> recurringTransactions;
     private List<PastTransaction> accountHistory;
 
-    public Long getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
     public Account() {
-        ID = nextID++;
+        this.accountNumber = nextID++;
     }
 
     // created by milton marwa 03/04/2017 to ease creation of accounts for tests
@@ -62,74 +51,88 @@ public class Account {
         this.recurringTransactions.add(recur);
     }
 
-    public Integer getID() {
-        return ID;
+    public Integer getAccountNumber() {
+        return accountNumber;
     }
 
+    public void setAccountNumber(Integer accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    @JsonIgnore
     public Long getBalance() {
         System.out.println("in get balance");
         return balance;
     }
 
+    public void setBalance(Long balance) {
+        this.balance = balance;
+        System.out.println("in balance setter and balance = " +this.balance);
+    }
+
+    @JsonIgnore
     public Long getLedgerBalance() {
         return ledgerBalance;
     }
 
+    @JsonIgnore
     public String getAccountType() {
         return accountType;
-    }
-
-    public Double getInterestRate() {
-        return interestRate;
-    }
-
-    public Long getOverDraftPenalty() {
-        return overDraftPenalty;
-    }
-
-    public Long getRequiredMinimumBalance() {
-        return requiredMinimumBalance;
-    }
-
-    public Boolean getIsMinimumBalanceRequired() {
-        return requiredMinimumBalance > 0L;
-    }
-
-    public List<RecurringTransaction> getRecurringTransactions() {
-        return recurringTransactions;
-    }
-
-    public List<PastTransaction> getAccountHistory() {
-        return accountHistory;
-    }
-
-    public void setBalance(Long balance) {
-        this.balance = balance;
-        System.out.println(this.balance);
     }
 
     public void setAccountType(String accountType) {
         this.accountType = accountType;
     }
 
+    @JsonIgnore
+    public Double getInterestRate() {
+        return interestRate;
+    }
+
     public void setInterestRate(Double interestRate) {
         this.interestRate = interestRate;
+    }
+
+    @JsonIgnore
+    public Long getOverDraftPenalty() {
+        return overDraftPenalty;
     }
 
     public void setOverDraftPenalty(Long overDraftPenalty) {
         this.overDraftPenalty = overDraftPenalty;
     }
 
-    public void setRequiredMinimumBalance(Long requiredMinimumBalance) {
-        this.requiredMinimumBalance = requiredMinimumBalance;
+    @JsonIgnore
+    public Long getRequiredMinimumBalance() {
+        return requiredMinimumBalance;
     }
 
-    public void setIsMinimumBalanceRequired(Boolean isMinimumBalanceRequired) {
-        this.isMinimumBalanceRequired = isMinimumBalanceRequired;
+    public void setRequiredMinimumBalance(Long requiredMinimumBalance) {
+        this.requiredMinimumBalance = requiredMinimumBalance;
+        this.setIsMinimumBalanceRequired();
+    }
+
+    @JsonIgnore
+    public Boolean getIsMinimumBalanceRequired() {
+        return isMinimumBalanceRequired;
+    }
+
+    private void setIsMinimumBalanceRequired() {
+        this.isMinimumBalanceRequired = (requiredMinimumBalance > 0L);
+    }
+
+    @JsonIgnore
+    public List<RecurringTransaction> getRecurringTransactions() {
+        return recurringTransactions;
     }
 
     public void setRecurringTransactions(List<RecurringTransaction> recurringTransactions) {
         this.recurringTransactions = recurringTransactions;
+    }
+
+    @JsonIgnore
+    public List<PastTransaction> getAccountHistory() {
+        return accountHistory;
     }
 
     public void setAccountHistory(List<PastTransaction> accountHistory) {
@@ -140,6 +143,7 @@ public class Account {
         ledgerBalance = balance + getAdjustedBalance(interval);
     }
 
+    @JsonIgnore
     private Long getAdjustedBalance(Integer interval) {
         Long adjustedAmount = 0L;
 
@@ -161,6 +165,7 @@ public class Account {
     the average balance of the account at each period.
     The actual formula used is just ( t[start] + t[end] ) / 2
     This is done for each recurring transaction in the list of recurring transactions . */
+    @JsonIgnore
     public long getAverageBalance() {
         long[] netRecurringTransactions = new long[getRecurringTransactions().size()];
         long localBalance = getBalance();

@@ -25,7 +25,6 @@ public class AccountTests {
         accountWithHistory.setInterestRate(0.10); // 10% APY
         accountWithHistory.setOverDraftPenalty(0L); // when under $0.00 no interest
         accountWithHistory.setRequiredMinimumBalance(50000L); //$500.00 no interest when this hits
-        accountWithHistory.setIsMinimumBalanceRequired(true);
 
         RecurringTransaction debit5DollarsPerDay = new RecurringTransaction(-500L, 365);
         RecurringTransaction credit100DollarsPerMonth = new RecurringTransaction(10000L, 12);
@@ -69,7 +68,6 @@ public class AccountTests {
         accountWithHistory2.setInterestRate(0.10); // 10% APY
         accountWithHistory2.setOverDraftPenalty(0L); // when under $0.00 no interest
         accountWithHistory2.setRequiredMinimumBalance(50000L); //$500.00 no interest when this hits
-        accountWithHistory2.setIsMinimumBalanceRequired(true);
 
         RecurringTransaction credit100DollarsPerMonth = new RecurringTransaction(10000L, 12);
         RecurringTransaction debit50DollarsPerMonth = new RecurringTransaction(-5000L, 12);

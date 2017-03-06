@@ -63,7 +63,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestWithNonZeroBalanceAndNoRMB() {
         long expected = 52356L; // TODO calculate this value
         account.setBalance(500000L); // $5000.00
-        account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
 
         long actual = complexInterestCalculator.getInterestAmount();
@@ -75,7 +74,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestWithNonZeroBalanceAndAboveRMB() {
         long expected = 52356; // TODO calculate this value
         account.setBalance(500000L); // $5000.00
-        account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(10000L);
 
         long actual = complexInterestCalculator.getInterestAmount();
@@ -87,7 +85,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestWithNonZeroBalanceAndBelowRMB() {
         long expected = 0L;
         account.setBalance(10000L); // $100.00
-        account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(50000L); // $500.00
 
         long actual = complexInterestCalculator.getInterestAmount();
@@ -99,7 +96,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestWithZeroBalanceAndNoRMB() {
         long expected = 0L;
         account.setBalance(0L);
-        account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
 
         long actual = complexInterestCalculator.getInterestAmount();
@@ -111,7 +107,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestWithZeroBalanceBelowRMB() {
         long expected = 0L;
         account.setBalance(1000L);
-        account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(10000L);
 
         long actual = complexInterestCalculator.getInterestAmount();
@@ -123,7 +118,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestNegativeBalanceNoRMB() {
         long expected = 0L;
         account.setBalance(-1000L);
-        account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
 
         long actual = complexInterestCalculator.getInterestAmount();
@@ -135,7 +129,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestNegativeBalanceWithRMB() {
         long expected = 0L;
         account.setBalance(-1000L);
-        account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(50000L);
 
         long actual = complexInterestCalculator.getInterestAmount();
@@ -147,7 +140,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestNonZeroBalanceWithDeductionsThatDoNotExceedInterest() {
         long expected = -200L;
         account.setBalance(1000000L);
-        account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
         RecurringTransaction debit1DollarPerMonth = new RecurringTransaction(-100L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
@@ -163,7 +155,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestNonZeroBalanceWithDeductionsThatDoExceedInterest() {
         long expected = -300L;
         account.setBalance(1000000L);
-        account.setIsMinimumBalanceRequired(false);
         account.setRequiredMinimumBalance(0L);
         RecurringTransaction debit1000DollarsPerMonth = new RecurringTransaction(-100100L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
@@ -179,7 +170,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestNonZeroBalanceAndBelowRMBWithCreditsThatDoNotBringBalanceAboveRMB() {
         long expected = -2L;
         account.setBalance(100L);
-        account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(1000000L);
         RecurringTransaction credit1DollarPerMonth = new RecurringTransaction(100L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
@@ -195,7 +185,6 @@ public class InterestCalculatorTests {
     public void calcComplexInterestNonZeroBalanceAndBelowRMBWithCreditsThatDoBringBalanceAboveRMB() {
         long expected = -2L;
         account.setBalance(950000L);
-        account.setIsMinimumBalanceRequired(true);
         account.setRequiredMinimumBalance(1000000L);
         RecurringTransaction credit200DollarsPerMonth = new RecurringTransaction(20000L, 12);
         List<RecurringTransaction> recurringTransactions =  new ArrayList<>();
