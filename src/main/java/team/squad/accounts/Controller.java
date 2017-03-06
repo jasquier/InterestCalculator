@@ -1,7 +1,7 @@
-package team.squad.spring;
+package team.squad.accounts;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import team.squad.accounts.Account;
 import team.squad.interest.InterestCalculator;
 
 /**
@@ -26,4 +26,7 @@ public class Controller {
     InterestCalculator getInterestAmount(@RequestBody InterestCalculator interestCalculator) {
         return interestCalculator;
     }
+
+    @Autowired
+    AccountRepository accountRepository;
 }

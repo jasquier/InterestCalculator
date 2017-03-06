@@ -1,12 +1,21 @@
 package team.squad.accounts;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * @author John A. Squier
  * add your name when you work on this file.
  */
-public class PastTransaction extends Transaction {
+@Entity
+@Table(name = "account_history")
+public class PastTransaction {
+
+    @Id
+    @GeneratedValue( strategy = GenerationType.AUTO)
+    private Integer id;
+    private Long amount;
+
 
     private Date dateOccurredOn;
 
@@ -15,9 +24,19 @@ public class PastTransaction extends Transaction {
     }
 
     public PastTransaction(Long amount, Date dateOccurredOn) {
-        super(amount);
+        this.amount = amount;
         this.dateOccurredOn = dateOccurredOn;
     }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
+    }
+
+
 
     public Date getDateOccurredOn() {
         return dateOccurredOn;
