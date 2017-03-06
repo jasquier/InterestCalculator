@@ -186,18 +186,5 @@ public class Account {
         return avgBalance;
     }
 
-    public long getMinimumBalance() {
-        long[] netRecurringTransactions2 = new long[getRecurringTransactions().size()];
-        long minBalance = 0;
-        long recurringBalance = getBalance();
 
-        for(int j=0; j<recurringTransactions.size(); j++){
-            for(int i=0; i<recurringTransactions.get(j).getFrequency(); i++){
-                netRecurringTransactions2[j] += recurringTransactions.get(j).getAmount();
-            }
-            minBalance = (recurringBalance + recurringBalance + netRecurringTransactions2[j] ) / 2;
-            recurringBalance = minBalance;
-        }
-        return minBalance;
-    }
 }
