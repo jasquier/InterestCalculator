@@ -24,18 +24,8 @@ import java.util.List;
  *      overdraft ✓ & minimum balance info ✓ & a list of recurring transactions ✓"
  */
 
-@Entity
-
-// this isn't right
-@JsonIgnoreProperties(value = {"balance", "ledgerBalance", "accountType",
-                                "interestRate", "overDraftPenalty", "requiredMinimumBalance",
-                                "isMinimumBalanceRequired", "recurringTransactions",
-                                "accountHistory"}, allowSetters = true)
 public class Account {
 
-
-    @Id
-    @GeneratedValue( strategy = GenerationType.AUTO)
     private Long id;
     private Long accountNumber;
 
