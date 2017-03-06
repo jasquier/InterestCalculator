@@ -1,9 +1,6 @@
 package team.squad.interest;
 
-import team.squad.accounts.Account;
-import team.squad.accounts.AccountStore;
-import team.squad.accounts.PastTransaction;
-import team.squad.accounts.RecurringTransaction;
+import team.squad.accounts.*;
 
 import java.util.Collections;
 import java.util.*;
@@ -33,8 +30,11 @@ public class InterestCalculator {
     private InterestType interestType;
     private CalculationRule calculationRule;
     private Integer numDaysForRule;
+    private BalanceTimeSeries balancePrediction;
 
-    public InterestCalculator() { }
+    public InterestCalculator() {
+        balancePrediction = new BalanceTimeSeries();
+    }
 
     public InterestCalculator(Account ac, int interval, InterestType interestType, CalculationRule calcRule) {
         this.account = ac;
@@ -42,6 +42,7 @@ public class InterestCalculator {
         //this.frequency = freq;
         this.interestType = interestType;
         this.calculationRule = calcRule;
+        balancePrediction = new BalanceTimeSeries();
     }
 
     public Long getInterestAmount() {
@@ -139,7 +140,6 @@ public class InterestCalculator {
     }
 
     private double getInterestRate() {
-        double rate;
         if (canEarnInterest())
             return account.getInterestRate();
         else if (isOverDrawn())
@@ -161,7 +161,7 @@ public class InterestCalculator {
         long balance = 0L;
         switch (calculationRule){
             case AVERAGE:
-                balance = account.getAverageBalance();
+                balance = balancePrediction.getAverageBalance(account, 13);
                 break;
 
             case EX_INTEREST_DATE:
@@ -169,11 +169,11 @@ public class InterestCalculator {
                 break;
 
             case MAXIMUM:
-                balance = 333333L;
+                balance = balancePrediction.getMaxBalance(account, 13);
                 break;
 
             case MINIMUM:
-                balance = 333333L;
+                balance = balancePrediction.getMinBalance(account, 13);
                 break;
 
             case NONE:
@@ -181,7 +181,7 @@ public class InterestCalculator {
                 break;
 
             case THRESHOLD_MAXIMUM:
-                balance = account.getMinimumBalance();
+                balance = 333333L;
                 break;
 
             case THRESHOLD_MINIMUM:
